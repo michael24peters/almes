@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddoudp2p4fxd6"]
+
+[ext_resource type="AudioStream" uid="uid://c8wbinodshhsv" path="res://assets/audio/music/flare/overworld theme.ogg" id="1_i2lv5"]
+
+[node name="Music" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_i2lv5")
+autoplay = true
+bus = &"Music"
