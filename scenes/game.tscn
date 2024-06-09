@@ -841,3 +841,4 @@ position_smoothing_speed = 2.0
 
 [node name="NPC" parent="." instance=ExtResource("3_1mwh7")]
 position = Vector2(112, 280)
+max_speed = 60.0
