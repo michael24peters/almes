@@ -11,7 +11,6 @@ func _ready():
 	set_physics_process(false)
 
 func _enter_state() -> void:
-	print("chase state activate!")
 	set_physics_process(true)
 	animator.play("move_right")
 

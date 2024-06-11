@@ -306,38 +306,41 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bc65a"]
 size = Vector2(11, 24)
 
-[node name="NPC" type="CharacterBody2D"]
+[node name="NPC" type="CharacterBody2D" node_paths=PackedStringArray("idle_animation", "hit_animation", "death_animation")]
 z_index = 2
 y_sort_enabled = true
 collision_layer = 14
 script = ExtResource("1_t50at")
+idle_animation = NodePath("Sprite2D/AnimationPlayerIdle")
+hit_animation = NodePath("Sprite2D/AnimationPlayerHit")
+death_animation = NodePath("Sprite2D/AnimationPlayerDie")
 max_speed = 100.0
 acceleration = 100.0
 
-[node name="OldComplete" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_fp1fx")
 hframes = 32
 vframes = 8
 frame = 4
 
-[node name="AnimationPlayerIdle" type="AnimationPlayer" parent="OldComplete"]
+[node name="AnimationPlayerIdle" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {
 "": SubResource("AnimationLibrary_qvxi8")
 }
 autoplay = "idle_d"
 speed_scale = 0.5
 
-[node name="AnimationPlayerHit" type="AnimationPlayer" parent="OldComplete"]
+[node name="AnimationPlayerHit" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {
 "": SubResource("AnimationLibrary_afuce")
 }
 
-[node name="AnimationPlayerDie" type="AnimationPlayer" parent="OldComplete"]
+[node name="AnimationPlayerDie" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {
 "": SubResource("AnimationLibrary_mp1q6")
 }
 
-[node name="AnimationPlayerMove" type="AnimationPlayer" parent="OldComplete"]
+[node name="AnimationPlayerMove" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {
 "": SubResource("AnimationLibrary_2aqjx")
 }
@@ -365,20 +368,19 @@ state = NodePath("NPCWanderState")
 [node name="NPCWanderState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator", "vision_cast")]
 script = ExtResource("7_24d3g")
 actor = NodePath("../..")
-animator = NodePath("../../OldComplete/AnimationPlayerMove")
+animator = NodePath("../../Sprite2D/AnimationPlayerMove")
 vision_cast = NodePath("../../RayCast2D")
 
 [node name="NPCChaseState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator", "vision_cast")]
 script = ExtResource("8_o1v2j")
 actor = NodePath("../..")
-animator = NodePath("../../OldComplete/AnimationPlayerMove")
+animator = NodePath("../../Sprite2D/AnimationPlayerMove")
 vision_cast = NodePath("../../RayCast2D")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(0, 10)
 target_position = Vector2(2.08165e-12, 25)
-collision_mask = 63
-collide_with_areas = true
+collision_mask = 48
 
 [connection signal="damage_taken" from="HitboxComponent" to="." method="_on_damage_taken"]
 [connection signal="died" from="HealthComponent" to="." method="_on_death"]

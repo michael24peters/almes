@@ -18,5 +18,6 @@ func damage(damage):
 		# TODO: check died signal; if true, disable collisions
 
 func can_accept_collision():
-	if health_component.hit_points > 0: collision.disabled = false
-	else: collision.disabled = true
+	#if health_component.hit_points > 0: collision.disabled = false
+	#else: collision.disabled = true
+	pass

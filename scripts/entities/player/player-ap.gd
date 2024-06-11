@@ -8,6 +8,8 @@ var last_direction = Vector2.DOWN  # Default direction when idle at start
 
 @onready var window : Window = get_window()
 
+@onready var hitbox_component = $HitboxComponent
+
 var is_attacking = false
 
 func _ready():
@@ -16,8 +18,9 @@ func _ready():
 # Runs at fixed 60 (default) times per second rate
 func _physics_process(delta):
 	handle_input()
-	update_animation()
 	update_movement()
+	move_and_slide()
+	update_animation()
 	
 func handle_input():
 	direction = Vector2.ZERO
@@ -34,14 +37,7 @@ func update_movement():
 	velocity.x = direction.x * speed
 	velocity.y = direction.y * speed
 	
-	#print("is_attacking physics = ", is_attacking)
-	if not is_attacking:
-		update_animation()
-		move_and_slide()
-	else:
-		# Can still move when attacking, but very slowly
-		velocity = velocity / 10
-		move_and_slide()
+	if is_attacking: velocity /= 10
 
 func update_animation():
 	if is_attacking: return # Do not update animation if attacking

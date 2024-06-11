@@ -11,11 +11,9 @@ func _ready():
 	set_physics_process(false)
 
 func _enter_state() -> void:
-	print("wander state active!")
 	set_physics_process(true)
 	animator.play("move_right")
 	actor.velocity = Vector2.RIGHT.rotated(randf_range(0, TAU)) * actor.max_speed # set direction of move to be in random direction
-	print("enter_state actor velocity = ", actor.velocity)
 
 func _exit_state() -> void:
 	set_physics_process(false)
