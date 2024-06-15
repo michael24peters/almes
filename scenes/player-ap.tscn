@@ -1,15 +1,15 @@
 [gd_scene load_steps=85 format=3 uid="uid://d07mjs2c0admx"]
 
-[ext_resource type="Script" path="res://scripts/player-ap.gd" id="1_nwmaf"]
+[ext_resource type="Script" path="res://scripts/entities/player/player-ap.gd" id="1_agbed"]
 [ext_resource type="Texture2D" path="res://assets/sprites/flare/char/hero/iso_hero.png" id="1_qpr4h"]
 [ext_resource type="Texture2D" uid="uid://dc34mf4ehm16b" path="res://assets/sprites/flare/char/hero_components/buckler.png" id="2_viid2"]
-[ext_resource type="Texture2D" uid="uid://cc5faag3fjeou" path="res://assets/sprites/flare/char/hero_components/leather_armor.png" id="3_ty32q"]
+[ext_resource type="PackedScene" uid="uid://dru8gtpya40sq" path="res://scenes/components/health_component.tscn" id="3_a75yt"]
+[ext_resource type="Texture2D" uid="uid://ctk4x8kkmgx2x" path="res://assets/sprites/flare/char/hero_components/clothes.png" id="4_8weh5"]
 [ext_resource type="Texture2D" uid="uid://bwfnsot5p0xw8" path="res://assets/sprites/flare/char/hero_components/longsword.png" id="4_le1vv"]
 [ext_resource type="Texture2D" uid="uid://diul5n22txlbf" path="res://assets/sprites/flare/char/hero_components/male_head1.png" id="5_kuny4"]
 [ext_resource type="Texture2D" uid="uid://ow8bkrj4q06i" path="res://assets/sprites/flare/char/hero_components/leather_hood.png" id="6_rvgsd"]
-[ext_resource type="PackedScene" uid="uid://dint1pgygyvck" path="res://scenes/weapon.tscn" id="7_sm684"]
-[ext_resource type="PackedScene" uid="uid://dru8gtpya40sq" path="res://scenes/health_component.tscn" id="8_qckxr"]
-[ext_resource type="PackedScene" uid="uid://n4wkskppl4ly" path="res://scenes/hitbox_component.tscn" id="9_nggd5"]
+[ext_resource type="PackedScene" uid="uid://dint1pgygyvck" path="res://scenes/components/weapon.tscn" id="7_fyi88"]
+[ext_resource type="PackedScene" uid="uid://n4wkskppl4ly" path="res://scenes/components/hitbox_component.tscn" id="10_owqjm"]
 
 [sub_resource type="Animation" id="Animation_jlmap"]
 length = 0.001
@@ -179,7 +179,7 @@ _data = {
 size = Vector2(12, 31)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibajx"]
-size = Vector2(12, 31.5)
+size = Vector2(12, 20)
 
 [sub_resource type="Animation" id="Animation_0lglr"]
 length = 0.001
@@ -2132,10 +2132,12 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(24.2651, 46.035)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree")]
+z_index = 2
+y_sort_enabled = true
 position = Vector2(199.53, 166.726)
-collision_layer = 9
+collision_mask = 61
 up_direction = Vector2(2.08165e-12, 1)
-script = ExtResource("1_nwmaf")
+script = ExtResource("1_agbed")
 animation_tree = NodePath("AnimationTree")
 
 [node name="OldComplete" type="Sprite2D" parent="."]
@@ -2151,13 +2153,13 @@ libraries = {
 autoplay = "idle_d"
 speed_scale = 0.5
 
-[node name="HealthComponent" parent="." instance=ExtResource("8_qckxr")]
+[node name="HealthComponent" parent="." instance=ExtResource("3_a75yt")]
 
 [node name="Equipment" type="Node2D" parent="."]
 
 [node name="ArmorSprite" type="Sprite2D" parent="Equipment"]
 position = Vector2(-0.529999, -13.726)
-texture = ExtResource("3_ty32q")
+texture = ExtResource("4_8weh5")
 hframes = 32
 vframes = 8
 frame = 192
@@ -2177,7 +2179,7 @@ hframes = 32
 vframes = 8
 frame = 192
 
-[node name="Weapon" parent="Equipment" node_paths=PackedStringArray("collision_box") instance=ExtResource("7_sm684")]
+[node name="Weapon" parent="Equipment" node_paths=PackedStringArray("collision_box") instance=ExtResource("7_fyi88")]
 attack_damage = 5.0
 collision_box = NodePath("Hitbox")
 
@@ -2190,7 +2192,7 @@ frame = 192
 [node name="Hitbox" type="Area2D" parent="Equipment/Weapon"]
 position = Vector2(-1, 14)
 collision_layer = 2
-collision_mask = 2
+collision_mask = 4
 
 [node name="WeaponCollision" type="CollisionShape2D" parent="Equipment/Weapon/Hitbox"]
 position = Vector2(2.08165e-12, 2.08165e-12)
@@ -2205,11 +2207,18 @@ hframes = 32
 vframes = 8
 frame = 193
 
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("9_nggd5")]
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("10_owqjm")]
+collision_mask = 61
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+visible = false
 position = Vector2(-1.53, 0.0240021)
+shape = SubResource("RectangleShape2D_ibajx")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(-1.53, -0.725998)
 shape = SubResource("RectangleShape2D_ibajx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -2227,6 +2236,8 @@ parameters/conditions/swing = false
 parameters/Idle/blend_position = Vector2(-0.997812, -0.00588238)
 parameters/Move/blend_position = Vector2(0, 0)
 parameters/Swing/blend_position = Vector2(2.08165e-12, 2.08165e-12)
+
+[node name="Footsteps" type="AudioStreamPlayer" parent="."]
 
 [connection signal="area_entered" from="Equipment/Weapon/Hitbox" to="Equipment/Weapon" method="_on_hitbox_area_entered"]
 [connection signal="animation_finished" from="AnimationTree" to="." method="_on_AttackAnimationFinished"]
