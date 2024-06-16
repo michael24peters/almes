@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cx6ylkl1gog14"
+path="res://.godot/imported/Forndom  Svitjod.mp3-049780e1e3e34c6b921bc4d8c063ccdd.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/other/Forndom  Svitjod.mp3"
+dest_files=["res://.godot/imported/Forndom  Svitjod.mp3-049780e1e3e34c6b921bc4d8c063ccdd.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

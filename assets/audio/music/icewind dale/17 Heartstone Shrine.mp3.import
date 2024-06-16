@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dny3ixqvabsoh"
+path="res://.godot/imported/17 Heartstone Shrine.mp3-a3b643ab148b0a6ec5fdf3463098c7eb.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/icewind dale/17 Heartstone Shrine.mp3"
+dest_files=["res://.godot/imported/17 Heartstone Shrine.mp3-a3b643ab148b0a6ec5fdf3463098c7eb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

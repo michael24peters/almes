@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://mh41yxax16js"
+path="res://.godot/imported/step_metal (3).ogg-86bdc9347cfbde8483557aedb49d2eaa.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/footsteps/step_metal (3).ogg"
+dest_files=["res://.godot/imported/step_metal (3).ogg-86bdc9347cfbde8483557aedb49d2eaa.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c638q2ovahtbw"
+path="res://.godot/imported/Dark Loop.mp3-790ffb2672237d4bce24c7292e460bd3.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/flare/Dark Loop.mp3"
+dest_files=["res://.godot/imported/Dark Loop.mp3-790ffb2672237d4bce24c7292e460bd3.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

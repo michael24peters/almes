@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d03m4c0bs71h5"
+path="res://.godot/imported/09 Kuldahar Theme.mp3-3430d5fb8433268fc5c8368de4f22e86.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/icewind dale/09 Kuldahar Theme.mp3"
+dest_files=["res://.godot/imported/09 Kuldahar Theme.mp3-3430d5fb8433268fc5c8368de4f22e86.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

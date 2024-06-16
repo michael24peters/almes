@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://doya8q2nyys5r"
+path="res://.godot/imported/06 The Lost Caravan.mp3-dac0f22e1578cb854e8d23872d7723ba.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/icewind dale/06 The Lost Caravan.mp3"
+dest_files=["res://.godot/imported/06 The Lost Caravan.mp3-dac0f22e1578cb854e8d23872d7723ba.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://jl2kd3xcwp2v"
+path="res://.godot/imported/11 Vale of Shadows.mp3-0284bca43a4b218f2c054d93e7152a9a.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/icewind dale/11 Vale of Shadows.mp3"
+dest_files=["res://.godot/imported/11 Vale of Shadows.mp3-0284bca43a4b218f2c054d93e7152a9a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

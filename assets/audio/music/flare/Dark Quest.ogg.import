@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cqfel60kjrqew"
+path="res://.godot/imported/Dark Quest.ogg-6272981f0974a7c6e06ec5849512b685.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/music/flare/Dark Quest.ogg"
+dest_files=["res://.godot/imported/Dark Quest.ogg-6272981f0974a7c6e06ec5849512b685.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

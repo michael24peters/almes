@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://hsibar8djmdc"
+path="res://.godot/imported/15 Temple of the Forgotten God Entrance.mp3-60c883db2dabf73941d68b9b22c62b40.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/icewind dale/15 Temple of the Forgotten God Entrance.mp3"
+dest_files=["res://.godot/imported/15 Temple of the Forgotten God Entrance.mp3-60c883db2dabf73941d68b9b22c62b40.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
