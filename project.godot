@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Almes_Isometric"
-run/main_scene="res://old/scenes/game.tscn"
+run/main_scene="res://src1/scenes/game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Music="res://old/scenes/music.tscn"
+Music="*res://src/music.tscn"
 
 [editor]
 

@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dint1pgygyvck"]
-
-[ext_resource type="Script" path="res://old/scripts/components/weapon.gd" id="1_76l7d"]
-
-[node name="Weapon" type="Node2D"]
-position = Vector2(-0.529999, -13.726)
-script = ExtResource("1_76l7d")
