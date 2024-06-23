@@ -2,7 +2,6 @@ extends State
 
 # InputHandlers
 @export var movement_input_handler: InputHandler
-# Makes the state_transition check for Attack state generic
 @export var attack_input_handler: InputHandler
 
 # AnimationTree of animation logic
@@ -38,10 +37,6 @@ func update(delta):
 		return # Do not run the code any further
 	
 	# Send signal to attack if attack intent detected
-	# TODO: this needs to be made generic so that *any* intention to attack
-		# not just user-input, causes
-	#if Input.is_action_just_pressed("attack_button") or Input.is_action_just_pressed("attack_mouse"):
-		#state_transition.emit(self, "Attack")
 	if attack_input_handler.want_attack() == true:
 		state_transition.emit(self, "Attack")
 	

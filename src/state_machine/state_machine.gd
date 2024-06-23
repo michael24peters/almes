@@ -3,7 +3,6 @@ extends Node
 class_name StateMachine
 
 @export var initial_state: State
-@export var animation_tree: AnimationTree
 
 var states: Dictionary = {} # TODO: remove need for this
 var current_state: State
@@ -22,12 +21,11 @@ func _ready():
 			# Allow states to communicate direction (change)
 			child.direction_changed.connect(_on_direction_changed)
 
-
 	if initial_state:
 		initial_state.enter()
 		current_state = initial_state
 
-func _process(delta): # NOTE: may need to change to _process_physics()
+func _physics_process(delta):
 	if current_state:
 		current_state.update(delta)
 

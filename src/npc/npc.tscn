@@ -1,22 +1,24 @@
-[gd_scene load_steps=74 format=3 uid="uid://cqicod6egb3m6"]
+[gd_scene load_steps=76 format=3 uid="uid://b4i12qhpcxfrx"]
 
-[ext_resource type="Script" path="res://src/player/player.gd" id="1_m8i81"]
-[ext_resource type="Texture2D" uid="uid://ctk4x8kkmgx2x" path="res://assets/sprites/flare/char/hero_components/clothes.png" id="3_jy5yj"]
-[ext_resource type="Texture2D" uid="uid://dc34mf4ehm16b" path="res://assets/sprites/flare/char/hero_components/buckler.png" id="4_2oal3"]
-[ext_resource type="Texture2D" uid="uid://ow8bkrj4q06i" path="res://assets/sprites/flare/char/hero_components/leather_hood.png" id="5_ijmjm"]
-[ext_resource type="Texture2D" uid="uid://bwfnsot5p0xw8" path="res://assets/sprites/flare/char/hero_components/longsword.png" id="6_h61wy"]
-[ext_resource type="Texture2D" uid="uid://diul5n22txlbf" path="res://assets/sprites/flare/char/hero_components/male_head1.png" id="7_abn7d"]
-[ext_resource type="Script" path="res://src/state_machine/state_machine.gd" id="7_ifugc"]
-[ext_resource type="Script" path="res://src/state_machine/states/idle.gd" id="8_gkuja"]
-[ext_resource type="Script" path="res://src/handlers/input_handler.gd" id="9_50me8"]
-[ext_resource type="Script" path="res://src/state_machine/states/move.gd" id="9_dskrl"]
+[ext_resource type="Script" path="res://src/npc/npc.gd" id="1_5kxmh"]
+[ext_resource type="Texture2D" uid="uid://bwfnsot5p0xw8" path="res://assets/sprites/flare/char/hero_components/longsword.png" id="1_dyg2s"]
+[ext_resource type="Texture2D" uid="uid://b4rgo7bil881a" path="res://assets/sprites/flare/char/hero_components/plate_armor.png" id="2_ifr02"]
+[ext_resource type="Texture2D" uid="uid://dy6w0mjn8iuy0" path="res://assets/sprites/flare/char/hero_components/shield.png" id="3_il405"]
+[ext_resource type="Texture2D" uid="uid://diul5n22txlbf" path="res://assets/sprites/flare/char/hero_components/male_head1.png" id="4_kw32o"]
+[ext_resource type="Texture2D" uid="uid://dysmm8v6jm767" path="res://assets/sprites/flare/char/hero_components/plate_helm.png" id="5_dfyda"]
+[ext_resource type="Script" path="res://src/state_machine/state_machine.gd" id="6_e7vw1"]
+[ext_resource type="Script" path="res://src/state_machine/states/idle.gd" id="7_cgmgp"]
+[ext_resource type="Script" path="res://src/state_machine/states/move.gd" id="8_0jhdq"]
+[ext_resource type="Script" path="res://src/handlers/player_move_handler.gd" id="9_cr4qf"]
+[ext_resource type="Script" path="res://src/state_machine/states/attack.gd" id="10_0fkth"]
+[ext_resource type="Script" path="res://src/handlers/player_attack_handler.gd" id="11_mcrkw"]
 
 [sub_resource type="Animation" id="Animation_0lglr"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -28,7 +30,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/1/path = NodePath("WeaponSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -40,7 +42,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/2/path = NodePath("ArmorSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -52,7 +54,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -64,7 +66,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -72,42 +74,6 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [192]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Equipment/Weapon/Hitbox/WeaponCollision:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2.08165e-12, 2.08165e-12)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Equipment/Weapon/Hitbox/WeaponCollision:scale")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1e-05, 1e-05)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Equipment/Weapon/Hitbox/WeaponCollision:disabled")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_pc6eh"]
@@ -117,7 +83,7 @@ loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -129,7 +95,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/1/path = NodePath("WeaponSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -141,7 +107,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/2/path = NodePath("ArmorSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -153,7 +119,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -165,7 +131,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -182,7 +148,7 @@ loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -194,7 +160,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/1/path = NodePath("WeaponSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -206,7 +172,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/2/path = NodePath("ArmorSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -218,7 +184,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -230,7 +196,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -247,7 +213,7 @@ loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -259,7 +225,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/1/path = NodePath("WeaponSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -271,7 +237,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/2/path = NodePath("ArmorSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -283,7 +249,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -295,7 +261,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -312,7 +278,7 @@ loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -324,7 +290,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/1/path = NodePath("WeaponSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -336,7 +302,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/2/path = NodePath("ArmorSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -348,7 +314,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -360,7 +326,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -377,7 +343,7 @@ loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -389,7 +355,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/1/path = NodePath("WeaponSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -401,7 +367,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/2/path = NodePath("ArmorSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -413,7 +379,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -425,7 +391,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -442,7 +408,7 @@ loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -454,7 +420,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -466,7 +432,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -478,7 +444,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -490,7 +456,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -507,7 +473,7 @@ loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -519,7 +485,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/1/path = NodePath("WeaponSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -531,7 +497,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/2/path = NodePath("ArmorSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -543,7 +509,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -555,7 +521,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -572,7 +538,7 @@ loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -584,7 +550,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/1/path = NodePath("WeaponSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -596,7 +562,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/2/path = NodePath("ArmorSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -608,7 +574,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -620,7 +586,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -637,7 +603,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -649,7 +615,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -661,7 +627,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -673,7 +639,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -685,7 +651,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -702,7 +668,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -714,7 +680,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -726,7 +692,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -738,7 +704,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -750,7 +716,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -767,7 +733,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -779,7 +745,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -791,7 +757,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -803,7 +769,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -815,7 +781,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -832,7 +798,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -844,7 +810,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/1/path = NodePath("WeaponSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -856,7 +822,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/2/path = NodePath("ArmorSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -868,7 +834,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -880,7 +846,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -897,7 +863,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -909,7 +875,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -921,7 +887,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -933,7 +899,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -945,7 +911,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -962,7 +928,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -974,7 +940,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -986,7 +952,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -998,7 +964,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1010,7 +976,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1027,7 +993,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -1039,7 +1005,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1051,7 +1017,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1063,7 +1029,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1075,7 +1041,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1092,7 +1058,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -1104,7 +1070,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1116,7 +1082,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1128,7 +1094,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1140,7 +1106,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1156,7 +1122,7 @@ length = 0.40001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -1168,7 +1134,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1180,7 +1146,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1192,7 +1158,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1204,7 +1170,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1220,7 +1186,7 @@ length = 0.40001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -1232,7 +1198,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1244,7 +1210,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1256,7 +1222,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1268,7 +1234,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1284,7 +1250,7 @@ length = 0.40001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -1296,7 +1262,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1308,7 +1274,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1320,7 +1286,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1332,7 +1298,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1348,7 +1314,7 @@ length = 0.40001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/0/path = NodePath("ArmorSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -1360,7 +1326,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/HeadSprite:frame")
+tracks/1/path = NodePath("HeadSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1372,7 +1338,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1384,7 +1350,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1396,7 +1362,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1405,42 +1371,6 @@ tracks/4/keys = {
 "update": 1,
 "values": [12, 13, 14, 15]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Equipment/Weapon/Hitbox/WeaponCollision:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Vector2(2.08165e-12, 2.08165e-12), Vector2(-40, 1)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Equipment/Weapon/Hitbox/WeaponCollision:scale")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Vector2(1e-05, 1e-05), Vector2(2, 0.5)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Equipment/Weapon/Hitbox/WeaponCollision:disabled")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
 
 [sub_resource type="Animation" id="Animation_v1av7"]
 resource_name = "swing_right"
@@ -1448,7 +1378,7 @@ length = 0.40001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -1460,7 +1390,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1472,7 +1402,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1484,7 +1414,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1496,7 +1426,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1512,7 +1442,7 @@ length = 0.40001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -1524,7 +1454,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1536,7 +1466,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1548,7 +1478,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1560,7 +1490,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1576,7 +1506,7 @@ length = 0.40001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/0/path = NodePath("ArmorSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -1588,7 +1518,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/HeadSprite:frame")
+tracks/1/path = NodePath("HeadSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1600,7 +1530,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1612,7 +1542,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1624,7 +1554,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1640,7 +1570,7 @@ length = 0.40001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame_coords")
+tracks/0/path = NodePath("HeadSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -1652,7 +1582,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1664,7 +1594,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1676,7 +1606,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1688,7 +1618,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1704,7 +1634,7 @@ length = 0.60001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Equipment/HeadSprite:frame")
+tracks/0/path = NodePath("HeadSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -1716,7 +1646,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Equipment/ArmorSprite:frame")
+tracks/1/path = NodePath("ArmorSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1728,7 +1658,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Equipment/Weapon/WeaponSprite:frame")
+tracks/2/path = NodePath("WeaponSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1740,7 +1670,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Equipment/Helm:frame")
+tracks/3/path = NodePath("Helm:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1752,7 +1682,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Equipment/Shield:frame")
+tracks/4/path = NodePath("Shield:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1792,133 +1722,133 @@ _data = {
 "walk_up_right": SubResource("Animation_b4vcu")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h5hnd"]
-animation = &"idle_left"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wv44j"]
-animation = &"idle_down"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sx8lx"]
-animation = &"idle_up"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qjcl3"]
-animation = &"idle_right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_66o0h"]
-animation = &"idle_down_left"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0h2ye"]
-animation = &"idle_down_right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7hoc3"]
-animation = &"idle_up_right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7ng32"]
-animation = &"idle_up_left"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_x3f8t"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_h5hnd")
-blend_point_0/pos = Vector2(-1, 2.08167e-14)
-blend_point_1/node = SubResource("AnimationNodeAnimation_wv44j")
-blend_point_1/pos = Vector2(0, 1)
-blend_point_2/node = SubResource("AnimationNodeAnimation_sx8lx")
-blend_point_2/pos = Vector2(0, -1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_qjcl3")
-blend_point_3/pos = Vector2(1, 0)
-blend_point_4/node = SubResource("AnimationNodeAnimation_66o0h")
-blend_point_4/pos = Vector2(-0.65, 0.65)
-blend_point_5/node = SubResource("AnimationNodeAnimation_0h2ye")
-blend_point_5/pos = Vector2(0.65, 0.65)
-blend_point_6/node = SubResource("AnimationNodeAnimation_7hoc3")
-blend_point_6/pos = Vector2(0.65, -0.65)
-blend_point_7/node = SubResource("AnimationNodeAnimation_7ng32")
-blend_point_7/pos = Vector2(-0.65, -0.65)
-blend_mode = 1
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0wb4k"]
-animation = &"move_left"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nfh41"]
-animation = &"move_right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mdt64"]
-animation = &"move_down"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_id21g"]
-animation = &"move_up"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w78dr"]
-animation = &"move_down_left"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_byu0w"]
-animation = &"move_down_right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_duy41"]
-animation = &"move_up_right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5s2u0"]
-animation = &"move_up_left"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_3ob5o"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_0wb4k")
-blend_point_0/pos = Vector2(-1, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_nfh41")
-blend_point_1/pos = Vector2(1, 0)
-blend_point_2/node = SubResource("AnimationNodeAnimation_mdt64")
-blend_point_2/pos = Vector2(0, 1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_id21g")
-blend_point_3/pos = Vector2(0, -1)
-blend_point_4/node = SubResource("AnimationNodeAnimation_w78dr")
-blend_point_4/pos = Vector2(-0.7, 0.7)
-blend_point_5/node = SubResource("AnimationNodeAnimation_byu0w")
-blend_point_5/pos = Vector2(0.7, 0.7)
-blend_point_6/node = SubResource("AnimationNodeAnimation_duy41")
-blend_point_6/pos = Vector2(0.7, -0.7)
-blend_point_7/node = SubResource("AnimationNodeAnimation_5s2u0")
-blend_point_7/pos = Vector2(-0.7, -0.7)
-blend_mode = 1
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pisk8"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fxlhs"]
 animation = &"swing_left"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7d7ow"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q5ws0"]
 animation = &"swing_right"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w3xg5"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lixb0"]
 animation = &"swing_up"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_06bic"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oc2nu"]
 animation = &"swing_down"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sitng"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_igpo8"]
 animation = &"swing_down_left"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_huj8w"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rxlsg"]
 animation = &"swing_down_right"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vohsj"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xsvk1"]
 animation = &"swing_up_right"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qbwlj"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2nn2k"]
 animation = &"swing_up_left"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_3xnfe"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_pisk8")
+blend_point_0/node = SubResource("AnimationNodeAnimation_fxlhs")
 blend_point_0/pos = Vector2(-1, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_7d7ow")
+blend_point_1/node = SubResource("AnimationNodeAnimation_q5ws0")
 blend_point_1/pos = Vector2(1, 0)
-blend_point_2/node = SubResource("AnimationNodeAnimation_w3xg5")
+blend_point_2/node = SubResource("AnimationNodeAnimation_lixb0")
 blend_point_2/pos = Vector2(2.08167e-14, -1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_06bic")
+blend_point_3/node = SubResource("AnimationNodeAnimation_oc2nu")
 blend_point_3/pos = Vector2(0, 1)
-blend_point_4/node = SubResource("AnimationNodeAnimation_sitng")
+blend_point_4/node = SubResource("AnimationNodeAnimation_igpo8")
 blend_point_4/pos = Vector2(-0.71, 0.71)
-blend_point_5/node = SubResource("AnimationNodeAnimation_huj8w")
+blend_point_5/node = SubResource("AnimationNodeAnimation_rxlsg")
 blend_point_5/pos = Vector2(0.71, 0.71)
-blend_point_6/node = SubResource("AnimationNodeAnimation_vohsj")
+blend_point_6/node = SubResource("AnimationNodeAnimation_xsvk1")
 blend_point_6/pos = Vector2(0.71, -0.71)
-blend_point_7/node = SubResource("AnimationNodeAnimation_qbwlj")
+blend_point_7/node = SubResource("AnimationNodeAnimation_2nn2k")
 blend_point_7/pos = Vector2(-0.71, -0.71)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mhq7j"]
+animation = &"idle_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1vabk"]
+animation = &"idle_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hr2mu"]
+animation = &"idle_up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6uccl"]
+animation = &"idle_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fovf8"]
+animation = &"idle_down_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e5vex"]
+animation = &"idle_down_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6oplp"]
+animation = &"idle_up_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x5hv7"]
+animation = &"idle_up_left"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_x3f8t"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_mhq7j")
+blend_point_0/pos = Vector2(-1, 2.08167e-14)
+blend_point_1/node = SubResource("AnimationNodeAnimation_1vabk")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_hr2mu")
+blend_point_2/pos = Vector2(0, -1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_6uccl")
+blend_point_3/pos = Vector2(1, 0)
+blend_point_4/node = SubResource("AnimationNodeAnimation_fovf8")
+blend_point_4/pos = Vector2(-0.65, 0.65)
+blend_point_5/node = SubResource("AnimationNodeAnimation_e5vex")
+blend_point_5/pos = Vector2(0.65, 0.65)
+blend_point_6/node = SubResource("AnimationNodeAnimation_6oplp")
+blend_point_6/pos = Vector2(0.65, -0.65)
+blend_point_7/node = SubResource("AnimationNodeAnimation_x5hv7")
+blend_point_7/pos = Vector2(-0.65, -0.65)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_68a0q"]
+animation = &"move_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6bk12"]
+animation = &"move_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e2yib"]
+animation = &"move_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_16c2n"]
+animation = &"move_up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ecbxt"]
+animation = &"move_down_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ukg8i"]
+animation = &"move_down_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_max8y"]
+animation = &"move_up_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b4l5e"]
+animation = &"move_up_left"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_3ob5o"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_68a0q")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_6bk12")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_e2yib")
+blend_point_2/pos = Vector2(0, 1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_16c2n")
+blend_point_3/pos = Vector2(0, -1)
+blend_point_4/node = SubResource("AnimationNodeAnimation_ecbxt")
+blend_point_4/pos = Vector2(-0.7, 0.7)
+blend_point_5/node = SubResource("AnimationNodeAnimation_ukg8i")
+blend_point_5/pos = Vector2(0.7, 0.7)
+blend_point_6/node = SubResource("AnimationNodeAnimation_max8y")
+blend_point_6/pos = Vector2(0.7, -0.7)
+blend_point_7/node = SubResource("AnimationNodeAnimation_b4l5e")
+blend_point_7/pos = Vector2(-0.7, -0.7)
 blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p6shg"]
@@ -1935,7 +1865,7 @@ advance_condition = &"idle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gllhc"]
 advance_mode = 2
-advance_condition = &"swing"
+advance_condition = &"attack"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g8tyc"]
 switch_mode = 2
@@ -1949,23 +1879,23 @@ advance_condition = &"move"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jif56"]
 advance_mode = 2
-advance_condition = &"swing"
+advance_condition = &"attack"
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_34d6h"]
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_3eohj"]
+states/Attack/node = SubResource("AnimationNodeBlendSpace2D_3xnfe")
+states/Attack/position = Vector2(465.692, 196.528)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_x3f8t")
-states/Idle/position = Vector2(384.66, 100.067)
+states/Idle/position = Vector2(384.66, 100.034)
 states/Move/node = SubResource("AnimationNodeBlendSpace2D_3ob5o")
 states/Move/position = Vector2(553.16, 103.037)
-states/Swing/node = SubResource("AnimationNodeBlendSpace2D_3xnfe")
-states/Swing/position = Vector2(465.692, 196.528)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_p6shg"), "Idle", "Move", SubResource("AnimationNodeStateMachineTransition_5loq0"), "Move", "Idle", SubResource("AnimationNodeStateMachineTransition_uwfoc"), "Idle", "Swing", SubResource("AnimationNodeStateMachineTransition_gllhc"), "Swing", "Idle", SubResource("AnimationNodeStateMachineTransition_g8tyc"), "Swing", "Move", SubResource("AnimationNodeStateMachineTransition_ic3ay"), "Move", "Swing", SubResource("AnimationNodeStateMachineTransition_jif56")]
-graph_offset = Vector2(24.2651, 46.035)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_p6shg"), "Idle", "Move", SubResource("AnimationNodeStateMachineTransition_5loq0"), "Move", "Idle", SubResource("AnimationNodeStateMachineTransition_uwfoc"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_gllhc"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_g8tyc"), "Attack", "Move", SubResource("AnimationNodeStateMachineTransition_ic3ay"), "Move", "Attack", SubResource("AnimationNodeStateMachineTransition_jif56")]
+graph_offset = Vector2(-69.35, 90.495)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lldv2"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d2o42"]
 size = Vector2(12, 20)
 
-[node name="Player" type="Node2D"]
-script = ExtResource("1_m8i81")
+[node name="NPC" type="CharacterBody2D"]
+script = ExtResource("1_5kxmh")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1974,75 +1904,84 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 active = false
-tree_root = SubResource("AnimationNodeStateMachine_34d6h")
+tree_root = SubResource("AnimationNodeStateMachine_3eohj")
 anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/attack = false
 parameters/conditions/idle = false
 parameters/conditions/move = false
-parameters/conditions/swing = false
+parameters/Attack/blend_position = Vector2(2.08165e-12, 2.08165e-12)
 parameters/Idle/blend_position = Vector2(-0.997812, -0.00588238)
-parameters/Move/blend_position = Vector2(0, 0)
-parameters/Swing/blend_position = Vector2(2.08165e-12, 2.08165e-12)
+parameters/Move/blend_position = Vector2(0.00299108, 1)
 
 [node name="WeaponSprite" type="Sprite2D" parent="."]
 position = Vector2(0, -14)
-texture = ExtResource("6_h61wy")
+texture = ExtResource("1_dyg2s")
 hframes = 32
 vframes = 8
 frame = 192
 
 [node name="ArmorSprite" type="Sprite2D" parent="."]
 position = Vector2(-0.529999, -13.726)
-texture = ExtResource("3_jy5yj")
+texture = ExtResource("2_ifr02")
 hframes = 32
 vframes = 8
 frame = 192
 
 [node name="Shield" type="Sprite2D" parent="."]
 position = Vector2(-0.529999, -13.726)
-texture = ExtResource("4_2oal3")
-hframes = 32
-vframes = 8
-frame = 192
-
-[node name="Helm" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(0, -14)
-texture = ExtResource("5_ijmjm")
+texture = ExtResource("3_il405")
 hframes = 32
 vframes = 8
 frame = 192
 
 [node name="HeadSprite" type="Sprite2D" parent="."]
 position = Vector2(-0.529999, -13.726)
-texture = ExtResource("7_abn7d")
+texture = ExtResource("4_kw32o")
 hframes = 32
 vframes = 8
 frame = 193
 
+[node name="Helm" type="Sprite2D" parent="."]
+position = Vector2(0, -14)
+texture = ExtResource("5_dfyda")
+hframes = 32
+vframes = 8
+frame = 192
+
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-z_index = 1
+z_index = 2
 position = Vector2(-1.53, -0.725998)
-shape = SubResource("RectangleShape2D_lldv2")
+shape = SubResource("RectangleShape2D_d2o42")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("6_e7vw1")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "movement_input_handler", "attack_input_handler")]
+script = ExtResource("7_cgmgp")
+animation_tree = NodePath("../../AnimationTree")
+movement_input_handler = NodePath("../Move/InputHandler")
+attack_input_handler = NodePath("../Attack/InputHandler")
+
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("movement_input_handler", "attack_input_handler", "animation_tree", "parent")]
+script = ExtResource("8_0jhdq")
+movement_input_handler = NodePath("InputHandler")
+attack_input_handler = NodePath("../Attack/InputHandler")
+animation_tree = NodePath("../../AnimationTree")
+move_speed = 200.0
+parent = NodePath("../..")
+
+[node name="InputHandler" type="Node" parent="StateMachine/Move"]
+script = ExtResource("9_cr4qf")
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("movement_input_handler", "attack_input_handler", "animation_tree")]
+script = ExtResource("10_0fkth")
+movement_input_handler = NodePath("../Move/InputHandler")
+attack_input_handler = NodePath("InputHandler")
+animation_tree = NodePath("../../AnimationTree")
+
+[node name="InputHandler" type="Node" parent="StateMachine/Attack"]
+script = ExtResource("11_mcrkw")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2.5, 2.5)
-
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("7_ifugc")
-initial_state = NodePath("Idle")
-
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree")]
-script = ExtResource("8_gkuja")
-animation_tree = NodePath("../../AnimationTree")
-
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree")]
-script = ExtResource("9_dskrl")
-animation_tree = NodePath("../../AnimationTree")
-
-[node name="InputHandler" type="Node" parent="StateMachine/Move"]
-script = ExtResource("9_50me8")
-
-[node name="Attack" type="Node" parent="StateMachine"]
-
-[node name="InputHandler" type="Node" parent="StateMachine/Attack"]
-script = ExtResource("9_50me8")
