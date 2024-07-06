@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://b4i12qhpcxfrx"]
+[gd_scene load_steps=77 format=3 uid="uid://b4i12qhpcxfrx"]
 
 [ext_resource type="Script" path="res://src/npc/npc.gd" id="1_5kxmh"]
 [ext_resource type="Texture2D" uid="uid://bwfnsot5p0xw8" path="res://assets/sprites/flare/char/hero_components/longsword.png" id="1_dyg2s"]
@@ -6,12 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://dy6w0mjn8iuy0" path="res://assets/sprites/flare/char/hero_components/shield.png" id="3_il405"]
 [ext_resource type="Texture2D" uid="uid://diul5n22txlbf" path="res://assets/sprites/flare/char/hero_components/male_head1.png" id="4_kw32o"]
 [ext_resource type="Texture2D" uid="uid://dysmm8v6jm767" path="res://assets/sprites/flare/char/hero_components/plate_helm.png" id="5_dfyda"]
-[ext_resource type="Script" path="res://src/state_machine/state_machine.gd" id="6_e7vw1"]
-[ext_resource type="Script" path="res://src/state_machine/states/idle.gd" id="7_cgmgp"]
-[ext_resource type="Script" path="res://src/state_machine/states/move.gd" id="8_0jhdq"]
-[ext_resource type="Script" path="res://src/handlers/player_move_handler.gd" id="9_cr4qf"]
-[ext_resource type="Script" path="res://src/state_machine/states/attack.gd" id="10_0fkth"]
-[ext_resource type="Script" path="res://src/handlers/player_attack_handler.gd" id="11_mcrkw"]
+[ext_resource type="Script" path="res://src/utility_ai/action.gd" id="7_0cm7i"]
+[ext_resource type="Script" path="res://src/utility_ai/agent.gd" id="7_o3rxq"]
+[ext_resource type="Script" path="res://src/utility_ai/bucket.gd" id="8_bqj01"]
+[ext_resource type="Script" path="res://src/utility_ai/consideration.gd" id="8_f81fo"]
+[ext_resource type="Script" path="res://src/game_state/data_node.gd" id="10_b5vqh"]
+[ext_resource type="Script" path="res://src/utility_ai/utility_ai_curve.gd" id="11_2oasy"]
 
 [sub_resource type="Animation" id="Animation_0lglr"]
 length = 0.001
@@ -1894,8 +1894,19 @@ graph_offset = Vector2(-69.35, 90.495)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2o42"]
 size = Vector2(12, 20)
 
-[node name="NPC" type="CharacterBody2D"]
+[sub_resource type="Curve" id="Curve_3k7ox"]
+_data = [Vector2(0, 0.0758582), 0.0, 0.433447, 1, 1, Vector2(0.1, 0.119203), 0.433447, 0.632226, 1, 1, Vector2(0.2, 0.182426), 0.632226, 0.865159, 1, 1, Vector2(0.3, 0.268941), 0.865159, 1.08599, 1, 1, Vector2(0.4, 0.377541), 1.08599, 1.22459, 1, 1, Vector2(0.5, 0.5), 1.22459, 1.22459, 1, 1, Vector2(0.6, 0.622459), 1.22459, 1.08599, 1, 1, Vector2(0.7, 0.731059), 1.08599, 0.865159, 1, 1, Vector2(0.8, 0.817575), 0.865159, 0.632226, 1, 1, Vector2(0.9, 0.880797), 0.632226, 0.433447, 1, 1, Vector2(1, 0.924142), 0.433447, 0.0, 1, 1]
+point_count = 11
+script = ExtResource("11_2oasy")
+curve_type = 3
+exponent = 5
+slope = 1
+x_shift = 0.0
+y_shift = 0.0
+
+[node name="NPC" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree")]
 script = ExtResource("1_5kxmh")
+animation_tree = NodePath("AnimationTree")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1953,35 +1964,21 @@ z_index = 2
 position = Vector2(-1.53, -0.725998)
 shape = SubResource("RectangleShape2D_d2o42")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("6_e7vw1")
-initial_state = NodePath("Idle")
-
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "movement_input_handler", "attack_input_handler")]
-script = ExtResource("7_cgmgp")
-animation_tree = NodePath("../../AnimationTree")
-movement_input_handler = NodePath("../Move/InputHandler")
-attack_input_handler = NodePath("../Attack/InputHandler")
-
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("movement_input_handler", "attack_input_handler", "animation_tree", "parent")]
-script = ExtResource("8_0jhdq")
-movement_input_handler = NodePath("InputHandler")
-attack_input_handler = NodePath("../Attack/InputHandler")
-animation_tree = NodePath("../../AnimationTree")
-move_speed = 200.0
-parent = NodePath("../..")
-
-[node name="InputHandler" type="Node" parent="StateMachine/Move"]
-script = ExtResource("9_cr4qf")
-
-[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("movement_input_handler", "attack_input_handler", "animation_tree")]
-script = ExtResource("10_0fkth")
-movement_input_handler = NodePath("../Move/InputHandler")
-attack_input_handler = NodePath("InputHandler")
-animation_tree = NodePath("../../AnimationTree")
-
-[node name="InputHandler" type="Node" parent="StateMachine/Attack"]
-script = ExtResource("11_mcrkw")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2.5, 2.5)
+
+[node name="Agent" type="Node" parent="."]
+script = ExtResource("7_o3rxq")
+
+[node name="CombatBucket" type="Node" parent="Agent"]
+script = ExtResource("8_bqj01")
+
+[node name="Chase" type="Node" parent="Agent/CombatBucket"]
+script = ExtResource("7_0cm7i")
+
+[node name="Consideration" type="Node" parent="Agent/CombatBucket/Chase"]
+script = ExtResource("8_f81fo")
+curve = SubResource("Curve_3k7ox")
+
+[node name="DataNode" type="Node" parent="Agent/CombatBucket/Chase/Consideration"]
+script = ExtResource("10_b5vqh")

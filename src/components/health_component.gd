@@ -1,24 +1,31 @@
-extends Node2D
+extends DataNode
 class_name HealthComponent
 
-@export var MAX_HIT_POINTS := 1.0
-var hit_points : float
+@export var MAX_HP := 1.0
+var hp := MAX_HP
 
-signal health_changed
 signal died
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	hit_points = MAX_HIT_POINTS
+	hp = MAX_HP
+	update_data(get_data())
 
-func damage(damage):
-	print("damage = ", damage)
-	hit_points -= damage
-	hit_points = clamp(hit_points, 0, MAX_HIT_POINTS) # Cannot go past 0 or max hp bounds
-	health_changed.emit() # Emit signal
-	if hit_points == 0: 
+# Override get_data to return relevant data
+func get_data() -> Dictionary:
+	return {
+		"hp": hp,
+		"max_hp": MAX_HP
+	}
+
+func damage(amount: float):
+	print("damage = ", amount)
+	hp -= amount
+	hp = clamp(hp, 0, MAX_HP) # Cannot go past 0 or max hp bounds
+	update_data(get_data()) # Emit signal of new data (incl. new hp)
+	if hp == 0: 
 		print("Slain!") # TODO: death mechanics
 		died.emit() # Death
 
-func heal(healing):
-	damage(-healing) # negative (-) damage = healing
+func heal(amount: float):
+	damage(-amount) # negative (-) damage = healing; reduces redundant code
