@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://yy03hxksvx2w"
+path="res://.godot/imported/14 Kresselacks Lair.mp3-02982234e71bcb72101c48087c84e206.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/icewind dale/14 Kresselacks Lair.mp3"
+dest_files=["res://.godot/imported/14 Kresselacks Lair.mp3-02982234e71bcb72101c48087c84e206.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

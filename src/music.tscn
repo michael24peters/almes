@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bneg46k2ys23b"]
+
+[ext_resource type="AudioStream" uid="uid://2eftmayfyjti" path="res://assets/audio/music/baldurs gate/Baldurs Gate OST  Stealth in the Bandit Camp.mp3" id="1_6vcry"]
+
+[node name="Music" type="AudioStreamPlayer"]
+stream = ExtResource("1_6vcry")
+bus = &"Music"

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c07ipiebwv4vm"
+path="res://.godot/imported/Caves of sorrow.ogg-079e0831d168340b82e00c4e499b84c9.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/music/flare/Caves of sorrow.ogg"
+dest_files=["res://.godot/imported/Caves of sorrow.ogg-079e0831d168340b82e00c4e499b84c9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

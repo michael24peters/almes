@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://brtvvwyvf34a5"
+path="res://.godot/imported/Baldurs Gate OST  Bandit Melee.mp3-b67e03dbb52cfa2bc53a490d4810bcf6.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/baldurs gate/Baldurs Gate OST  Bandit Melee.mp3"
+dest_files=["res://.godot/imported/Baldurs Gate OST  Bandit Melee.mp3-b67e03dbb52cfa2bc53a490d4810bcf6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

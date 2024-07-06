@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cw4l8yp5lnvec"
+path="res://.godot/imported/04 Hrothgars Home.mp3-7ceff59ca68e28ad7856f59f2d73327b.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/icewind dale/04 Hrothgars Home.mp3"
+dest_files=["res://.godot/imported/04 Hrothgars Home.mp3-7ceff59ca68e28ad7856f59f2d73327b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

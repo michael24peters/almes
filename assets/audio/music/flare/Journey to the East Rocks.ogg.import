@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bag1ualilm11y"
+path="res://.godot/imported/Journey to the East Rocks.ogg-cd733fde62bc871683bcdb31f5cc4a42.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/music/flare/Journey to the East Rocks.ogg"
+dest_files=["res://.godot/imported/Journey to the East Rocks.ogg-cd733fde62bc871683bcdb31f5cc4a42.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bfj0d2ut248bv"
+path="res://.godot/imported/Baldurs Gate OST  The Beregost Night.mp3-a41ba43c79f5a5a7bad6760516ddf133.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/baldurs gate/Baldurs Gate OST  The Beregost Night.mp3"
+dest_files=["res://.godot/imported/Baldurs Gate OST  The Beregost Night.mp3-a41ba43c79f5a5a7bad6760516ddf133.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dwjx3asqpnq32"
+path="res://.godot/imported/Baldurs Gate OST  The Friendly Arms Inn.mp3-b0d3815ddffad4adf56010c1c43fb33e.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/baldurs gate/Baldurs Gate OST  The Friendly Arms Inn.mp3"
+dest_files=["res://.godot/imported/Baldurs Gate OST  The Friendly Arms Inn.mp3-b0d3815ddffad4adf56010c1c43fb33e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
