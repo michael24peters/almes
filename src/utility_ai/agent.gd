@@ -17,13 +17,13 @@ class_name Agent
 # propagate changes in the agent
 
 # Format: {"name": string, "utility": float}
-var current_action: Dictionary = {}
-var selected_action: Dictionary = {}
+var current_action: Dictionary = {"name": "", "utility": 0.0}
+var selected_action: Dictionary = {"name": "", "utility": 0.0}
 
 # Format: {"[bucketname]": Bucket}
 var buckets: Dictionary = {}
 # Format: {"name": string, "utility": float}
-var current_bucket: Dictionary = {}
+var current_bucket: Dictionary = {"name": "", "utility": 0.0}
 
 enum InertiaType {
 	TIMER, # Waits for a set period of time
@@ -58,7 +58,7 @@ func bucket_selector():
 	for bucket in buckets:
 		# If active bucket has highest utility, switch to it so long as inertia
 		# is not active
-		if buckets[bucket].utility > current_bucket["utility"] and bucket.is_active and !inertia:
+		if buckets[bucket].utility > current_bucket["utility"] and buckets[bucket].is_active and !inertia:
 			# Format current_bucket to match action format
 			current_bucket["name"] = bucket
 			current_bucket["utility"] = buckets[bucket].utility
@@ -69,6 +69,8 @@ func action_selector():
 	apply_inertia() # Check inertia
 	
 	# Check current_bucket's selected action
+	print("current bucket name: ", current_bucket["name"])
+	print("bucket: ", buckets[current_bucket["name"]])
 	selected_action = buckets[current_bucket["name"]].evaluate()
 	
 	if !inertia: # Only allow action change if inertia off
