@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bsrm6ghtuqaw7"]
+[gd_scene load_steps=7 format=3 uid="uid://bsrm6ghtuqaw7"]
 
 [ext_resource type="Texture2D" uid="uid://cnfquq0lsbbd6" path="res://assets/sprites/flare/nature/grassland_tiles.png" id="1_n33cj"]
 [ext_resource type="PackedScene" uid="uid://bneg46k2ys23b" path="res://src/music.tscn" id="3_amjmc"]
 [ext_resource type="PackedScene" uid="uid://e1shaj7lubcv" path="res://src/player/player.tscn" id="3_i3lsq"]
+[ext_resource type="Script" path="res://src/game_state/game_state.gd" id="4_0hy2o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4ahvc"]
 texture = ExtResource("1_n33cj")
@@ -1197,3 +1198,6 @@ autoplay = true
 z_index = 2
 y_sort_enabled = true
 position = Vector2(224, 237)
+
+[node name="GameState" type="Node" parent="."]
+script = ExtResource("4_0hy2o")

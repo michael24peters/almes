@@ -5,3 +5,4 @@ extends CharacterBody2D
 func _ready():
 	# Want the animation_tree to always be active (for now)
 	animation_tree.active = true
+	

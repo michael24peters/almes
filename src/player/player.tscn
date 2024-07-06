@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://e1shaj7lubcv"]
+[gd_scene load_steps=78 format=3 uid="uid://e1shaj7lubcv"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_4g8rv"]
 [ext_resource type="Texture2D" uid="uid://ctk4x8kkmgx2x" path="res://assets/sprites/flare/char/hero_components/clothes.png" id="3_jy5yj"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://src/handlers/player_move_handler.gd" id="10_c5x7d"]
 [ext_resource type="Script" path="res://src/state_machine/states/attack.gd" id="11_p7jc7"]
 [ext_resource type="Script" path="res://src/handlers/player_attack_handler.gd" id="12_rn05e"]
+[ext_resource type="Script" path="res://src/components/hitbox_component.gd" id="13_bbgsu"]
+[ext_resource type="Script" path="res://src/components/health_component.gd" id="14_0v5b7"]
 
 [sub_resource type="Animation" id="Animation_0lglr"]
 length = 0.001
@@ -1889,7 +1891,7 @@ states/Idle/position = Vector2(384.66, 100.034)
 states/Move/node = SubResource("AnimationNodeBlendSpace2D_3ob5o")
 states/Move/position = Vector2(553.16, 103.037)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_p6shg"), "Idle", "Move", SubResource("AnimationNodeStateMachineTransition_5loq0"), "Move", "Idle", SubResource("AnimationNodeStateMachineTransition_uwfoc"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_gllhc"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_g8tyc"), "Attack", "Move", SubResource("AnimationNodeStateMachineTransition_ic3ay"), "Move", "Attack", SubResource("AnimationNodeStateMachineTransition_jif56")]
-graph_offset = Vector2(106.705, -35.82)
+graph_offset = Vector2(-141.92, -5.055)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s0gln"]
 size = Vector2(12, 20)
@@ -1913,7 +1915,7 @@ parameters/conditions/idle = false
 parameters/conditions/move = false
 parameters/Attack/blend_position = Vector2(2.08165e-12, 2.08165e-12)
 parameters/Idle/blend_position = Vector2(-0.997812, -0.00588238)
-parameters/Move/blend_position = Vector2(0.00299108, 1)
+parameters/Move/blend_position = Vector2(0.702835, 0.702857)
 
 [node name="WeaponSprite" type="Sprite2D" parent="."]
 position = Vector2(0, -14)
@@ -1988,4 +1990,18 @@ script = ExtResource("12_rn05e")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2.5, 2.5)
 
+[node name="HitboxComponent" type="Area2D" parent="."]
+script = ExtResource("13_bbgsu")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitboxComponent"]
+z_index = 2
+position = Vector2(-1.53, -0.725998)
+shape = SubResource("RectangleShape2D_s0gln")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("14_0v5b7")
+
 [connection signal="animation_finished" from="AnimationTree" to="StateMachine/Attack" method="_on_animation_finished"]
+[connection signal="damage_taken" from="HitboxComponent" to="HealthComponent" method="damage"]
+[connection signal="hp_received" from="HitboxComponent" to="HealthComponent" method="heal"]
+[connection signal="died" from="HealthComponent" to="HitboxComponent" method="_on_died"]
