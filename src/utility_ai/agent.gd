@@ -13,8 +13,7 @@ class_name Agent
 ## 2. Select the highest utility, active bucket.
 ## 3. Select the bucket's selected action if there is no inertia active.
 
-# TODO: bucket_changed needs to contain the right thing in it in order to
-# propagate changes in the agent
+@export var state_machine: StateMachine
 
 # Format: {"name": string, "utility": float}
 var current_action: Dictionary = {"name": "", "utility": 0.0}
@@ -69,8 +68,6 @@ func action_selector():
 	apply_inertia() # Check inertia
 	
 	# Check current_bucket's selected action
-	print("current bucket name: ", current_bucket["name"])
-	print("bucket: ", buckets[current_bucket["name"]])
 	selected_action = buckets[current_bucket["name"]].evaluate()
 	
 	if !inertia: # Only allow action change if inertia off

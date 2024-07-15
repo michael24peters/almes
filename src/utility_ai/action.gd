@@ -1,3 +1,4 @@
+@icon("res://assets/icons/Action.jpg")
 extends Node
 class_name Action
 
@@ -41,18 +42,18 @@ func evaluate() -> float:
 
 ## Calculate the aggregate of consideration scores according to the chosen
 ## aggregation method.
-func aggregate(scores: Array[float]) -> float:
+func aggregate(weights: Array[float]) -> float:
 	match aggregation:
 		AggregationType.MULT:
-			return scores.reduce(func(accum, score): return accum * score)
+			return weights.reduce(func(accum, weight): return accum * weight)
 		AggregationType.AVG:
-			return scores.reduce(func(accum, score): return accum + score) / len(scores)
+			return weights.reduce(func(accum, weight): return accum + weight) / len(weights)
 		AggregationType.SUM:
-			return scores.reduce(func(accum, score): return accum + score)
+			return weights.reduce(func(accum, weight): return accum + weight)
 		AggregationType.MIN:
-			return scores.min()
+			return weights.min()
 		AggregationType.MAX:
-			return scores.max()
+			return weights.max()
 	
 	# Return error if no matches in switch case
 	push_error("Unrecognized AggregationType: %d" % [aggregation])

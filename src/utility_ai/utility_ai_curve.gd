@@ -1,5 +1,6 @@
 # Copyright (c) 2023 John Pennycook
 # SPDX-License-Identifier: MIT
+# Modified by Michael Peters (2024)
 @tool
 class_name UtilityAICurve
 extends Curve
@@ -12,7 +13,7 @@ extends Curve
 ## The curve is stored as a sequence of points managed by [Curve], and
 ## can therefore represent any arbitrary piecewise function. For convenience, a
 ## number of built-in curves that are typically used in utility systems
-## (binary, linear, exponential and logistic curve) are also available.
+## (binary, linear, power and logistic curve) are also available.
 ## [br][br]
 ## The utility value associated with a given input value can be calculated by
 ## calling the [method evaluate] method.
@@ -25,7 +26,7 @@ extends Curve
 enum CurveType {
 	BINARY,  ## A curve that is 0 until a threshold, then 1 afterwards.
 	LINEAR,  ## A straight line between two points.
-	EXPONENTIAL,  ## A simple curve with x raised to the specified power.
+	POWER,  ## A simple curve with x raised to the specified power.
 	LOGISTIC,  ## An S-shaped curve, similar to a smoothed binary curve.
 	CUSTOM,  ## A custom [Curve] described by a sequence of points.
 }
@@ -102,7 +103,7 @@ func _set_curve_type(p_curve_type: CurveType):
 	y_shift = 0.0
 
 	match curve_type:
-		CurveType.EXPONENTIAL:
+		CurveType.POWER:
 			exponent = 2
 		CurveType.LOGISTIC:
 			exponent = 10
@@ -147,11 +148,11 @@ func _update_points(npoints: int = 10) -> void:
 	elif curve_type == CurveType.LINEAR:
 		var linear = func(x): return _clamp(slope * (x - x_shift) + y_shift)
 		_add_points(linear, npoints)
-	elif curve_type == CurveType.EXPONENTIAL:
-		var exponential = func(x): return _clamp(
+	elif curve_type == CurveType.POWER:
+		var power = func(x): return _clamp(
 			slope * pow(x - x_shift, exponent) + y_shift
 		)
-		_add_points(exponential, npoints)
+		_add_points(power, npoints)
 	elif curve_type == CurveType.LOGISTIC:
 		var logistic = func(x): return _clamp(
 			slope / (1.0 + exp(-exponent * (x - 0.5 - x_shift))) + y_shift
@@ -177,7 +178,7 @@ func _to_string() -> String:
 	const NAMES := {
 		CurveType.BINARY: "BINARY",
 		CurveType.LINEAR: "LINEAR",
-		CurveType.EXPONENTIAL: "EXPONENTIAL",
+		CurveType.POWER: "POWER",
 		CurveType.LOGISTIC: "LOGISTIC",
 		CurveType.CUSTOM: "CUSTOM",
 	}

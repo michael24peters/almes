@@ -24,12 +24,15 @@ signal data_requested(data_key, requester)
 # Signal to notify when data is received; not currently needed
 #signal data_received(data_key, data)
 
-var game_values: Array = []
+# Dictionary of DataNode values
+var game_values: Dictionary = {}
 var derived_value: float
 
 ## To be implemented in instance of Consideration class; need to determine the
 ## derived_value to pass into a UtilityAICurve.
 func evaluate() -> float:
+	# Calculate value to pass to curve
+	derived_value = calculate_derived_value()
 	if invert:
 		derived_value = 1 - derived_value
 	return curve.evaluate(derived_value)

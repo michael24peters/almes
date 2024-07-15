@@ -10,12 +10,12 @@ class_name Bucket
 
 enum SelectionType {
 	HIGHEST_SCORE, # The highest utility action is chosen
-	WEIGHTED_PROB, # Chosen by weighted probability rescaled utility scores
-	PERCENTILE_PROB, # Chosen by weighted prob. of top percentile scores
-	TOP_SCORES_PROB # Chosen by weighted prob. of top X scores
+	WEIGHTED_PROBABILITY, # Probability of selection proportional to utility
+	PERCENTILE_PROBABILITY, # Chosen by weighted prob. of top percentile scores
+	TOP_SCORES_PROBABILITY # Chosen by weighted prob. of top X scores
 }
 
-@export var selection: SelectionType = SelectionType.PERCENTILE_PROB
+@export var selection: SelectionType = SelectionType.PERCENTILE_PROBABILITY
 
 ## The utility of a bucket is based on manual input and a switch.
 @export var utility := 0.0
@@ -86,13 +86,13 @@ func selector(actions: Dictionary, selection: SelectionType,
 			return {"name": actions.find_key(highest_score), 
 					"utility": highest_score}
 		
-		SelectionType.WEIGHTED_PROB:
+		SelectionType.WEIGHTED_PROBABILITY:
 			# Get action weights
 			actions = get_weights(actions)
 			# Choose random action based on weights
 			return choose(actions.keys(), actions.values())
 		
-		SelectionType.PERCENTILE_PROB:
+		SelectionType.PERCENTILE_PROBABILITY:
 			# Get highest scoring action
 			var highest_scoring_action = selector(actions, 
 				SelectionType.HIGHEST_SCORE)
@@ -103,9 +103,9 @@ func selector(actions: Dictionary, selection: SelectionType,
 					actions.erase(action)
 			
 			# Return randomly chosen, top percentile action based on weights
-			return selector(actions, SelectionType.WEIGHTED_PROB)
+			return selector(actions, SelectionType.WEIGHTED_PROBABILITY)
 			
-		SelectionType.TOP_SCORES_PROB:
+		SelectionType.TOP_SCORES_PROBABILITY:
 			if num_top_scores < 1:
 				push_error("Cannot have less than 1 top score!")
 			
@@ -123,7 +123,7 @@ func selector(actions: Dictionary, selection: SelectionType,
 				actions.erase(top_action["name"])
 			
 			# Return randomly chosen, top scoring action based on weights
-			return selector(top_actions, SelectionType.WEIGHTED_PROB)
+			return selector(top_actions, SelectionType.WEIGHTED_PROBABILITY)
 	
 	# Return error if no matches in switch case
 	push_error("Unrecognized SelectionType: %d" % [selection])

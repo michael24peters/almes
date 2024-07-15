@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://e1shaj7lubcv"]
+[gd_scene load_steps=79 format=3 uid="uid://e1shaj7lubcv"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_4g8rv"]
 [ext_resource type="Texture2D" uid="uid://ctk4x8kkmgx2x" path="res://assets/sprites/flare/char/hero_components/clothes.png" id="3_jy5yj"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://diul5n22txlbf" path="res://assets/sprites/flare/char/hero_components/male_head1.png" id="7_abn7d"]
 [ext_resource type="Script" path="res://src/state_machine/state_machine.gd" id="7_ifugc"]
 [ext_resource type="Script" path="res://src/state_machine/states/idle.gd" id="8_gkuja"]
+[ext_resource type="Script" path="res://src/components/location_component.gd" id="8_u745o"]
 [ext_resource type="Script" path="res://src/state_machine/states/move.gd" id="9_dskrl"]
 [ext_resource type="Script" path="res://src/handlers/player_move_handler.gd" id="10_c5x7d"]
 [ext_resource type="Script" path="res://src/state_machine/states/attack.gd" id="11_p7jc7"]
@@ -1957,6 +1958,21 @@ z_index = 2
 position = Vector2(-1.53, -0.725998)
 shape = SubResource("RectangleShape2D_s0gln")
 
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("14_0v5b7")
+MAX_HP = 20.0
+
+[node name="LocationComponent" type="Node" parent="."]
+script = ExtResource("8_u745o")
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+script = ExtResource("13_bbgsu")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitboxComponent"]
+z_index = 2
+position = Vector2(-1.53, -0.725998)
+shape = SubResource("RectangleShape2D_s0gln")
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("7_ifugc")
 initial_state = NodePath("Idle")
@@ -1990,18 +2006,7 @@ script = ExtResource("12_rn05e")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2.5, 2.5)
 
-[node name="HitboxComponent" type="Area2D" parent="."]
-script = ExtResource("13_bbgsu")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitboxComponent"]
-z_index = 2
-position = Vector2(-1.53, -0.725998)
-shape = SubResource("RectangleShape2D_s0gln")
-
-[node name="HealthComponent" type="Node" parent="."]
-script = ExtResource("14_0v5b7")
-
 [connection signal="animation_finished" from="AnimationTree" to="StateMachine/Attack" method="_on_animation_finished"]
+[connection signal="died" from="HealthComponent" to="HitboxComponent" method="_on_died"]
 [connection signal="damage_taken" from="HitboxComponent" to="HealthComponent" method="damage"]
 [connection signal="hp_received" from="HitboxComponent" to="HealthComponent" method="heal"]
-[connection signal="died" from="HealthComponent" to="HitboxComponent" method="_on_died"]
