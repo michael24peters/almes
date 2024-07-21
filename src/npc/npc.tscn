@@ -2111,7 +2111,6 @@ script = ExtResource("18_8kc7p")
 [node name="InRange" type="Node" parent="Agent/CombatBucket/Attack"]
 script = ExtResource("13_o6v0l")
 curve = SubResource("Curve_rjqym")
-invert = true
 
 [node name="HasWeapon" type="Node" parent="Agent/CombatBucket/Attack"]
 script = ExtResource("14_pa3qp")
