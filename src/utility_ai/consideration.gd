@@ -43,9 +43,9 @@ func calculate_derived_value() -> float:
 
 ## Receieve requested data from Dictionary of data (usually GameState's 
 ## game_state_data variable).
-func receive_data(data_key, data):
-	game_values[data_key] = data.get(data_key)
-	print("Data received: %s : %s", [data_key, data.to_string()]) # Debug
+func receive_data(node_key, child_key, data):
+	game_values[node_key][child_key] = data
+	print("Data received: %s : %s : %s", [node_key, child_key, data.to_string()]) # Debug
 
 ## To be implemented in instanced Consideration; generic implementation
 ## commented below.

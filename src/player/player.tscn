@@ -8,13 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://diul5n22txlbf" path="res://assets/sprites/flare/char/hero_components/male_head1.png" id="7_abn7d"]
 [ext_resource type="Script" path="res://src/state_machine/state_machine.gd" id="7_ifugc"]
 [ext_resource type="Script" path="res://src/state_machine/states/idle.gd" id="8_gkuja"]
-[ext_resource type="Script" path="res://src/components/location_component.gd" id="8_u745o"]
+[ext_resource type="Script" path="res://src/components/scripts/location_component.gd" id="8_u745o"]
 [ext_resource type="Script" path="res://src/state_machine/states/move.gd" id="9_dskrl"]
 [ext_resource type="Script" path="res://src/handlers/player_move_handler.gd" id="10_c5x7d"]
 [ext_resource type="Script" path="res://src/state_machine/states/attack.gd" id="11_p7jc7"]
 [ext_resource type="Script" path="res://src/handlers/player_attack_handler.gd" id="12_rn05e"]
-[ext_resource type="Script" path="res://src/components/hitbox_component.gd" id="13_bbgsu"]
-[ext_resource type="Script" path="res://src/components/health_component.gd" id="14_0v5b7"]
+[ext_resource type="Script" path="res://src/components/scripts/hitbox_component.gd" id="13_bbgsu"]
+[ext_resource type="Script" path="res://src/components/scripts/health_component.gd" id="14_0v5b7"]
 
 [sub_resource type="Animation" id="Animation_0lglr"]
 length = 0.001

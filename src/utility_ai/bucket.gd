@@ -1,154 +1,116 @@
+# bucket.gd
+
 extends Node
 class_name Bucket
 
-##
-## NOTE: The Bucket class treats the actions Dictionary destructively, i.e.
-## removes actions as it searches for the action to execute. 
-## NOTE: The terms "top" and "highest" are used interchangably, with preference
-## to "highest" unless the code becomes unnecessarily cumbersome to interpret.
-##
-
+# Methods of the selection for selector() method
 enum SelectionType {
-	HIGHEST_SCORE, # The highest utility action is chosen
+	HIGHEST_UTILITY, # The highest utility action is chosen
 	WEIGHTED_PROBABILITY, # Probability of selection proportional to utility
-	PERCENTILE_PROBABILITY, # Chosen by weighted prob. of top percentile scores
-	TOP_SCORES_PROBABILITY # Chosen by weighted prob. of top X scores
+	TOP_UTILITY_PROBABILITY, # Weighted prob. of top X utility values
+	PERCENTILE_PROBABILITY # Weighted prob. of actions at or above Xth percentile
 }
 
-@export var selection: SelectionType = SelectionType.PERCENTILE_PROBABILITY
+# Chosen SelectionType for selector() method to use
+@export var selection: SelectionType
 
-## The utility of a bucket is based on manual input and a switch.
-@export var utility := 0.0
-@export var is_active := true
+# Bucket priority score between 0 and 1
+@export var priority: float
+# Toggle Bucket on or off
+@export var is_active: bool = true
 
-# Variable to store the original utility value. Acts as a backup for the utility
-# value if the bucket is set to inactive.
-var original_utility := 0.0
+# Number of top utility values to use for the TOP_UTILITY_PROBABILITY case
+@export var num_top_actions: int = 3
+# Percentile range of acceptance for the PERCENTILE_PROBABILITY case
+@export var percentile: float = .9
 
-func _ready():
-	# Store initial value of utility to backup
-	original_utility = utility
+# Dictionary of action names and their utility scores
+var actions: Dictionary
 
-## Set whether the bucket is active or not.
-func set_is_active(value: bool):
-	is_active = value
-	if is_active:
-		# Restore the original utility value
-		utility = original_utility
-	else:
-		# Save the current utility and set it to 0
-		original_utility = utility
-		utility = 0.0
-
-## Set the utility value of the bucket.
-func set_utility(new_utility: float):
-	# Check whether utility score is positive
-	if new_utility >= 0.0:
-		# Check whether is_active is set to true; return error otherwise
-		if is_active:
-			# Update the utility
-			utility = new_utility
-			# Update the original utility
-			original_utility = new_utility
-		else: push_error("Bucket is currently inactive!")
-	else: push_error("Utility score must be positive. You entered %d" % 
-		[new_utility])
-
-## Determine the bucket's selected action. Unlike previous evaluate() methods 
-## further in the Utility AI hierarchy, this method returns a Dictionary 
-## containing the selected action and its utility score. This is for the Agent's 
-## reference in connecting the selected action to the state machine.
+## Main method of Bucket. Update all actions then call on selector() to select an action.
 func evaluate() -> Dictionary:
-	var actions = self.get_children()
-	
-	# Poorly named; new_actions is actions with updated scores (via evaluate())
-	var new_actions: Dictionary
-	# Loop through actions
-	for action in actions:
-		# Evaluate action (update action and its utility)
-		var score = action.evaluate()
-		# Store action and utility in new_actions
-		new_actions[action.name] = score
-	
-	# Aggregate the scores and select the action
-	return selector(new_actions, selection)
+	if is_active:
+		# Populate actions with action names and updated utility scores
+		for child in self.get_children():
+			if child is Action:
+				actions[child.name.to_lower()] = child.evaluate()
+		
+		return selector()
+	else:
+		return {"name": "", "utility": 0.0}
 
-## Select an action based on selection method
-func selector(actions: Dictionary, selection: SelectionType, 
-	percentile = .1, num_top_scores = 3) -> Dictionary:
-	
-	# Base return for no actions
-	if actions.size() == 0: return {"name": "", "utility": 0}
-	
+## Selects action from Bucket based on chosen selection method.
+func selector() -> Dictionary:
 	match selection:
-		SelectionType.HIGHEST_SCORE:
-			var highest_score = actions.values().max()
-			return {"name": actions.find_key(highest_score), 
-					"utility": highest_score}
+		SelectionType.HIGHEST_UTILITY:
+			var highest_utility = actions.values().max()
+			return {actions.find_key(highest_utility): highest_utility}
 		
 		SelectionType.WEIGHTED_PROBABILITY:
-			# Get action weights
-			actions = get_weights(actions)
-			# Choose random action based on weights
-			return choose(actions.keys(), actions.values())
+			return get_weighted_probability(actions)
+			
+		SelectionType.TOP_UTILITY_PROBABILITY:
+			if num_top_actions < 1: push_error("Cannot have <1 top score!") # Sanity check
+			
+			var top_actions: Dictionary # Stores the top X actions
+			
+			# Sort action utilities
+			var sorted_values = actions.values()
+			sorted_values.sort()
+			
+			if sorted_values.size() < num_top_actions: # Limit top action pool by amount available
+				num_top_actions = sorted_values.size()
+				push_warning("%d actions but %d top actions allowed." % [sorted_values.size(), num_top_actions])
+			
+			sorted_values = sorted_values.slice(-num_top_actions) # Keep only the top X utility values
+			
+			# Go through sorted_values array in reverse order for descending order
+			for i in range(sorted_values.size() - 1, -1, -1):
+				top_actions[actions.find_key(sorted_values[i])] = sorted_values[i] # Get top X utility actions
+			
+			# Return weighted probability on top actions
+			return get_weighted_probability(top_actions)
 		
 		SelectionType.PERCENTILE_PROBABILITY:
-			# Get highest scoring action
-			var highest_scoring_action = selector(actions, 
-				SelectionType.HIGHEST_SCORE)
-				
-			# Find action (scores) within percentile of highest scoring action
+			var utilities = actions.values()
+			utilities.sort() # Sort the utility values in ascending order
+			
+			# Determine the index and value where percentile threshold is reached
+			var cutoff_index = int(ceil(percentile * utilities.size())) - 1
+			var percentile_value = utilities[cutoff_index] # Value closest to percentile threshold
+			
+			var top_actions: Dictionary = {} # Stores the top percentile actions
+			
+			# Find actions in percentile range
 			for action in actions:
-				if highest_scoring_action["utility"] - actions[action] > percentile:
-					actions.erase(action)
+				if actions[action] >= percentile_value:
+					top_actions[action] = actions[action]
 			
-			# Return randomly chosen, top percentile action based on weights
-			return selector(actions, SelectionType.WEIGHTED_PROBABILITY)
-			
-		SelectionType.TOP_SCORES_PROBABILITY:
-			if num_top_scores < 1:
-				push_error("Cannot have less than 1 top score!")
-			
-			var top_actions: Dictionary = {}
-			
-			for i in range(num_top_scores):
-				# Find top scoring action in actions
-				var top_action = selector(actions, SelectionType.HIGHEST_SCORE)
-				
-				# Add next top scoring action
-				# NOTE: this looks pretty jank but it works ok?
-				top_actions[top_action["name"]] = top_action["utility"]
-				
-				# Remove from actions, start search again
-				actions.erase(top_action["name"])
-			
-			# Return randomly chosen, top scoring action based on weights
-			return selector(top_actions, SelectionType.WEIGHTED_PROBABILITY)
-	
+			# Perform weighted probability selection on actions in percentile range
+			return get_weighted_probability(top_actions)
+		
 	# Return error if no matches in switch case
 	push_error("Unrecognized SelectionType: %d" % [selection])
-	return {"name": "", "utility": 0}
+	return {"name": "", "utility": 0.0}
 
-## Calculates the appropriate weights for all actions given their utility score.
-func get_weights(actions: Dictionary) -> Dictionary:
-	var total_score = 0.0
-	var scores = actions.values()
-	# Calculate sum of action utility scores
-	for score in scores: total_score += score
+## Calculates probability weights for each action based on utility value then selects an action.
+func get_weighted_probability(actions_: Dictionary) -> Dictionary:
+	var weighted_actions = actions_.duplicate()
+	var sum = weighted_actions.values().reduce(func(accum, utility): return accum + utility)
 	
-	# Divide all action scores by the total score to get action weights.
-	# actions now contains elements and weights
-	for action in actions: actions[action] /= total_score
-	
-	return actions
-
-## Randomly selects a weight from keys (elements) and values (weights).
-func choose(elements: Array, weights: Array) -> Dictionary: 
-	var sseed = randf() # random uniform distributed number
+	var seed = randf() # Generate a pseudo-random float in range [0,1]
 	var cumulative_weight = 0.0
-	for i in range(weights.size()): # for each weight we calculate cumulatives
-		cumulative_weight += weights[i]
-		if sseed <= cumulative_weight: # choose element
-			return {"name": elements[i], "utility": weights[i]}
-	push_error("No elements for choose() to choose from!")
-	return {"name": "", "utility": 0}
+	
+	for action in weighted_actions: 
+		# Weight action utility scores. The sum of these weights is 1.
+		weighted_actions[action] /= sum
+		
+		# Add current weight to running total
+		cumulative_weight += weighted_actions[action]
+		# If action weight range contains seed, selected action found
+		if seed <= cumulative_weight: return {"name": action, "utility": actions_[action]}
+		# If seed is greater than cumulative weight, check the next action
+	
+	# Return error if no actions found
+	push_error("No action elements found!")
+	return {"name": "", "utility": 0.0}
