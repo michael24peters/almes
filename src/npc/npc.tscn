@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://b4i12qhpcxfrx"]
+[gd_scene load_steps=94 format=3 uid="uid://b4i12qhpcxfrx"]
 
 [ext_resource type="Script" path="res://src/npc/npc.gd" id="1_5kxmh"]
 [ext_resource type="Texture2D" uid="uid://bwfnsot5p0xw8" path="res://assets/sprites/flare/char/hero_components/longsword.png" id="1_dyg2s"]
@@ -18,7 +18,9 @@
 [ext_resource type="Script" path="res://src/state_machine/states/move.gd" id="12_nh8lf"]
 [ext_resource type="Script" path="res://src/handlers/npc_move_handler.gd" id="13_8voib"]
 [ext_resource type="Script" path="res://src/utility_ai/buckets/chill.gd" id="13_uvvjf"]
+[ext_resource type="Script" path="res://src/state_machine/states/attack.gd" id="14_r887n"]
 [ext_resource type="Script" path="res://src/utility_ai/utility_ai_curve.gd" id="14_uydka"]
+[ext_resource type="Script" path="res://src/handlers/npc_attack_handler.gd" id="15_kr2uo"]
 [ext_resource type="Script" path="res://src/utility_ai/considerations/chill_desire.gd" id="17_7qc4v"]
 [ext_resource type="Script" path="res://src/utility_ai/action.gd" id="18_8kc7p"]
 [ext_resource type="Script" path="res://src/utility_ai/considerations/threat.gd" id="18_tlvv3"]
@@ -2041,19 +2043,29 @@ initial_state = NodePath("Idle")
 script = ExtResource("11_qkj1w")
 animation_tree = NodePath("../../AnimationTree")
 movement_input_handler = NodePath("../Move/InputHandler")
-attack_input_handler = NodePath("")
+attack_input_handler = NodePath("../Attack/InputHandler")
 
 [node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "movement_input_handler", "attack_input_handler", "parent")]
 script = ExtResource("12_nh8lf")
 animation_tree = NodePath("../../AnimationTree")
 movement_input_handler = NodePath("InputHandler")
-attack_input_handler = NodePath("")
+attack_input_handler = NodePath("../Attack/InputHandler")
 move_speed = 100.0
 parent = NodePath("../..")
 
 [node name="InputHandler" type="Node" parent="StateMachine/Move" node_paths=PackedStringArray("los_component")]
 script = ExtResource("13_8voib")
 los_component = NodePath("../../../LoSComponent")
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("movement_input_handler", "attack_input_handler", "animation_tree")]
+script = ExtResource("14_r887n")
+movement_input_handler = NodePath("../Move/InputHandler")
+attack_input_handler = NodePath("InputHandler")
+animation_tree = NodePath("../../AnimationTree")
+
+[node name="InputHandler" type="Node" parent="StateMachine/Attack" node_paths=PackedStringArray("agent")]
+script = ExtResource("15_kr2uo")
+agent = NodePath("../../../Agent")
 
 [node name="Agent" type="Node" parent="." node_paths=PackedStringArray("state_machine")]
 script = ExtResource("7_o3rxq")
