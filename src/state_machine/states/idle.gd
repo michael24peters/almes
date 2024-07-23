@@ -14,6 +14,7 @@ func enter():
 	animation_tree["parameters/conditions/idle"] = true 
 	# Set direction, which only needs to be defined upon entering Idle state
 	animation_tree["parameters/Idle/blend_position"] = direction
+	#print("Entered Idle state") # Debug
 
 func update(_delta: float): # TODO: intent to act vs acting distinction
 	# Send signal to move if movement keys detected

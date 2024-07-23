@@ -17,6 +17,7 @@ var last_direction := Vector2(0,1)
 func enter():
 	# Activate move animation in AnimationTree
 	animation_tree["parameters/conditions/move"] = true 
+	if parent.name.to_lower() == "npc": print("Entered Move state") # Debug
 
 func update(delta):
 	# Get direction from input handler, which has a unique instance for each 
