@@ -16,4 +16,4 @@ func get_data() -> Dictionary:
 # NOTE: an alternative is to make every variable private and require a getters
 # and setters, which automatically call data_changed signal
 func update_data(): 
-	data_changed.emit(self.get_parent().name, self.name, get_data())
+	data_changed.emit(self.get_parent().name.to_lower(), self.name.to_lower(), get_data())

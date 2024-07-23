@@ -3,15 +3,17 @@ extends Data
 class_name LoSComponent
 
 # Angle of line of sight
-@export var angle_cone_of_vision := deg_to_rad(30.0)
+@export var angle_cone_of_vision := deg_to_rad(200.0)
 # Line of sight range
-@export var max_view_distance := 200.0
+@export var max_view_distance := 150.0
 # Line of sight precision
 @export var angle_between_rays := deg_to_rad(5.0)
+var direction := Vector2.DOWN
 
 var target: CharacterBody2D = null
 var ray_to_target: RayCast2D = null
-signal sees_target(ray: RayCast2D, target: CharacterBody2D)
+
+@export var entity: CharacterBody2D
 
 # Toggle line of sight on or off, i.e. toggle rays
 @export var los_active: bool = true
@@ -30,20 +32,40 @@ func generate_ray_casts() -> void:
 		# Determine ray cast angle
 		var angle: float = angle_between_rays * (index - ray_count / 2.0)
 		# TODO: change Vector2.Down to direction NPC is facing
-		ray.target_position = Vector2.DOWN.rotated(angle) * max_view_distance
+		ray.target_position = direction.rotated(angle) * max_view_distance
 		add_child(ray)
 		ray.enabled = true
 
-func _physics_process(delta) -> void:
+func update_rays() -> void:
+	# Determine number of rays needed
+	var ray_count = int(angle_cone_of_vision / angle_between_rays)
+	
+	var index = 0
 	for ray in get_children():
 		if ray is RayCast2D:
+			# Determine ray cast angle
+			var angle: float = angle_between_rays * (index - ray_count / 2.0)
+			# TODO: change Vector2.Down to direction NPC is facing
+			ray.target_position = direction.rotated(angle) * max_view_distance
+		index += 1
+
+func _physics_process(delta) -> void:
+	update_rays()
+	# Search for Character in line of sight
+	for ray in get_children():
+		if ray is RayCast2D:
+			# Update ray positions
+			ray.global_position = entity.global_position
+			
 			if ray.is_colliding() and ray.get_collider() is CharacterBody2D:
 				ray_to_target = ray
 				target = ray.get_collider()
-				sees_target.emit(ray_to_target, target)
 				# Update Database
 				update_data()
 				break
+			else: 
+				target = null
+				ray_to_target = null
 
 ## Toggle line of sight
 func set_los(los: bool):
@@ -64,3 +86,7 @@ func get_data():
 		"max_view_distance": max_view_distance,
 		"angle_between_rays": angle_between_rays
 	}
+
+# Update direction based from StateMachine instructions, i.e. other states
+func _on_direction_changed(new_direction: Vector2): 
+	direction = new_direction

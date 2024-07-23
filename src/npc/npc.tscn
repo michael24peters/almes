@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://b4i12qhpcxfrx"]
+[gd_scene load_steps=92 format=3 uid="uid://b4i12qhpcxfrx"]
 
 [ext_resource type="Script" path="res://src/npc/npc.gd" id="1_5kxmh"]
 [ext_resource type="Texture2D" uid="uid://bwfnsot5p0xw8" path="res://assets/sprites/flare/char/hero_components/longsword.png" id="1_dyg2s"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://cjh3xa1jg7dif" path="res://src/components/scenes/health_component.tscn" id="7_dtpou"]
 [ext_resource type="Script" path="res://src/utility_ai/agent.gd" id="7_o3rxq"]
 [ext_resource type="Script" path="res://src/utility_ai/buckets/combat.gd" id="8_1wqvu"]
-[ext_resource type="Script" path="res://src/components/scripts/location_component.gd" id="8_t1j5d"]
 [ext_resource type="Script" path="res://src/components/scripts/los_component.gd" id="9_jobdu"]
 [ext_resource type="Script" path="res://src/state_machine/state_machine.gd" id="10_5p2ag"]
 [ext_resource type="Script" path="res://src/utility_ai/considerations/distance_from_target.gd" id="10_eba0b"]
@@ -18,12 +17,8 @@
 [ext_resource type="Script" path="res://src/state_machine/states/idle.gd" id="11_qkj1w"]
 [ext_resource type="Script" path="res://src/state_machine/states/move.gd" id="12_nh8lf"]
 [ext_resource type="Script" path="res://src/handlers/npc_move_handler.gd" id="13_8voib"]
-[ext_resource type="Script" path="res://src/utility_ai/considerations/in_range.gd" id="13_o6v0l"]
 [ext_resource type="Script" path="res://src/utility_ai/buckets/chill.gd" id="13_uvvjf"]
-[ext_resource type="Script" path="res://src/state_machine/states/attack.gd" id="14_n24s6"]
-[ext_resource type="Script" path="res://src/utility_ai/considerations/has_weapon.gd" id="14_pa3qp"]
 [ext_resource type="Script" path="res://src/utility_ai/utility_ai_curve.gd" id="14_uydka"]
-[ext_resource type="Script" path="res://src/handlers/npc_attack_handler.gd" id="15_ykcpv"]
 [ext_resource type="Script" path="res://src/utility_ai/considerations/chill_desire.gd" id="17_7qc4v"]
 [ext_resource type="Script" path="res://src/utility_ai/action.gd" id="18_8kc7p"]
 [ext_resource type="Script" path="res://src/utility_ai/considerations/threat.gd" id="18_tlvv3"]
@@ -1905,7 +1900,7 @@ states/Idle/position = Vector2(384.66, 100.034)
 states/Move/node = SubResource("AnimationNodeBlendSpace2D_3ob5o")
 states/Move/position = Vector2(553.16, 103.037)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_p6shg"), "Idle", "Move", SubResource("AnimationNodeStateMachineTransition_5loq0"), "Move", "Idle", SubResource("AnimationNodeStateMachineTransition_uwfoc"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_gllhc"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_g8tyc"), "Attack", "Move", SubResource("AnimationNodeStateMachineTransition_ic3ay"), "Move", "Attack", SubResource("AnimationNodeStateMachineTransition_jif56")]
-graph_offset = Vector2(-69.35, 90.495)
+graph_offset = Vector2(-38.9449, 20.025)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2o42"]
 size = Vector2(11, 20)
@@ -1950,17 +1945,7 @@ slope = -1
 x_shift = 0.0
 y_shift = 1.0
 
-[sub_resource type="Curve" id="Curve_rjqym"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 4
-script = ExtResource("14_uydka")
-curve_type = 0
-exponent = 1
-slope = 1
-x_shift = 2.08167e-17
-y_shift = 0.0
-
-[sub_resource type="Curve" id="Curve_pspfr"]
+[sub_resource type="Curve" id="Curve_4d1xc"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 script = ExtResource("14_uydka")
@@ -2035,36 +2020,40 @@ zoom = Vector2(2.5, 2.5)
 
 [node name="HealthComponent" parent="." instance=ExtResource("7_dtpou")]
 
-[node name="LocationComponent" type="Node" parent="."]
-script = ExtResource("8_t1j5d")
-
-[node name="LoSComponent" type="Node" parent="."]
+[node name="LoSComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
 script = ExtResource("9_jobdu")
+entity = NodePath("..")
 
 [node name="HitboxComponent" parent="." instance=ExtResource("10_lqpq1")]
+collision_layer = 4
+collision_mask = 2
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 z_index = 2
 position = Vector2(-1.5, -1)
 shape = SubResource("RectangleShape2D_d2o42")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("10_5p2ag")
+initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine"]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "movement_input_handler", "attack_input_handler")]
 script = ExtResource("11_qkj1w")
+animation_tree = NodePath("../../AnimationTree")
+movement_input_handler = NodePath("../Move/InputHandler")
+attack_input_handler = NodePath("")
 
-[node name="Move" type="Node" parent="StateMachine"]
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "movement_input_handler", "attack_input_handler", "parent")]
 script = ExtResource("12_nh8lf")
+animation_tree = NodePath("../../AnimationTree")
+movement_input_handler = NodePath("InputHandler")
+attack_input_handler = NodePath("")
+move_speed = 100.0
+parent = NodePath("../..")
 
-[node name="InputHandler" type="Node" parent="StateMachine/Move"]
+[node name="InputHandler" type="Node" parent="StateMachine/Move" node_paths=PackedStringArray("los_component")]
 script = ExtResource("13_8voib")
-
-[node name="Attack" type="Node" parent="StateMachine"]
-script = ExtResource("14_n24s6")
-
-[node name="InputHandler" type="Node" parent="StateMachine/Attack"]
-script = ExtResource("15_ykcpv")
+los_component = NodePath("../../../LoSComponent")
 
 [node name="Agent" type="Node" parent="." node_paths=PackedStringArray("state_machine")]
 script = ExtResource("7_o3rxq")
@@ -2104,14 +2093,8 @@ curve = SubResource("Curve_xsinm")
 
 [node name="LoS" type="Node" parent="Agent/CombatBucket/Chase"]
 script = ExtResource("26_ohtg4")
+curve = SubResource("Curve_4d1xc")
+parent_keys = Array[String](["npc"])
+data_keys = Array[String](["loscomponent"])
 
-[node name="Attack" type="Node" parent="Agent/CombatBucket"]
-script = ExtResource("18_8kc7p")
-
-[node name="InRange" type="Node" parent="Agent/CombatBucket/Attack"]
-script = ExtResource("13_o6v0l")
-curve = SubResource("Curve_rjqym")
-
-[node name="HasWeapon" type="Node" parent="Agent/CombatBucket/Attack"]
-script = ExtResource("14_pa3qp")
-curve = SubResource("Curve_pspfr")
+[connection signal="direction_changed" from="StateMachine/Move" to="LoSComponent" method="_on_direction_changed"]

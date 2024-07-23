@@ -36,7 +36,7 @@ var inertia_active: bool = false
 
 # Timer variables
 var timer_created = false
-var timer: Timer # Declare timer variable here for scope
+var timer # Declare timer variable here for scope
 
 func _physics_process(_delta: float):
 	# Sanity check
@@ -61,7 +61,10 @@ func _physics_process(_delta: float):
 	var selected_action = current_bucket.evaluate()
 	
 	# Check inertia
-	inertia(selected_action)
+	if current_action["name"] != "" and current_action["name"] != "idle":
+		#print("current action name: ", current_action["name"]) # Debug
+		#print("inertia: ", inertia_active) # Debug
+		inertia(selected_action)
 	#print("inertia: ", inertia_active) # Debug
 
 	# Changing Bucket breaks inertia

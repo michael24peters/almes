@@ -1966,9 +1966,10 @@ MAX_HP = 20.0
 script = ExtResource("8_u745o")
 
 [node name="HitboxComponent" type="Area2D" parent="."]
+collision_mask = 8
 script = ExtResource("13_bbgsu")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 z_index = 2
 position = Vector2(-1.53, -0.725998)
 shape = SubResource("RectangleShape2D_s0gln")
@@ -1983,11 +1984,11 @@ animation_tree = NodePath("../../AnimationTree")
 movement_input_handler = NodePath("../Move/InputHandler")
 attack_input_handler = NodePath("../Attack/InputHandler")
 
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("movement_input_handler", "attack_input_handler", "animation_tree", "parent")]
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "movement_input_handler", "attack_input_handler", "parent")]
 script = ExtResource("9_dskrl")
+animation_tree = NodePath("../../AnimationTree")
 movement_input_handler = NodePath("InputHandler")
 attack_input_handler = NodePath("../Attack/InputHandler")
-animation_tree = NodePath("../../AnimationTree")
 move_speed = 200.0
 parent = NodePath("../..")
 

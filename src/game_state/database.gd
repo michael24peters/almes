@@ -13,13 +13,26 @@ func traverse_tree(node):
 	for child in node.get_children():
 	
 		if child is Data:
+			
+			#print("node name: ", node.name.to_lower()) # Debug
+			#print("child name: ", child.name.to_lower()) # Debug
+			#print("child data: ", child.get_data()) # Debug
+			
+			# Ensure the node dictionary exists in game_state
+			if not game_state.has(node.name.to_lower()):
+				game_state[node.name.to_lower()] = {}
+			
+			# Add data
 			game_state[node.name.to_lower()][child.name.to_lower()] = child.get_data()
+			
+			#print("game state: ", game_state) # Debug
+			
 			# Connect data_changed signal in Data to _on_data_changed() method in Database
 			child.connect("data_changed", Callable(self, "_on_data_changed"))
 		
 		elif child is Consideration:
 			# Connect request_data signal in Consideration to _on_request_data() method in Database
-			child.connect("request_data", Callable(self, "_on_request_data"))
+			child.connect("data_request", Callable(self, "_on_request_data"))
 		
 		traverse_tree(child) # Recursively check all sub-trees
 

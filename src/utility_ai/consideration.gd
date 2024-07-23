@@ -10,8 +10,10 @@ class_name Consideration
 signal data_request(parent_key, data_key, requester)
 
 var data: Dictionary
-var parent_keys: Array
-var data_keys: Array
+
+# To be implemented by Consideration instance
+@export var parent_keys: Array[String]
+@export var data_keys: Array[String]
 
 ## Returns weight of the consideration
 func evaluate() -> float:
@@ -24,12 +26,22 @@ func get_derived_value() -> float:
 
 ## Request data from Database
 func request_data():
+	# parent_keys and data_keys must not be empty
+	if parent_keys.size() == 0 or data_keys.size() == 0:
+		push_error("No data request for consideration! (parent_key.size = %s, data_key.size = %s)" % [parent_keys.size(), data_keys.size()])
 	# parent_keys and data_keys must be the same size
 	if parent_keys.size() != data_keys.size():
-		push_error("Index mismatch! (parent_key.size = %s, data_key.size = %s)" % [parent_keys.size(), data_keys.size()])
+		push_error("Data request keys size do not match! (parent_key.size = %s, data_key.size = %s)" % [parent_keys.size(), data_keys.size()])
+	
 	for i in range(parent_keys.size()):
 		data_request.emit(parent_keys[i], data_keys[i], self)
 
 ## Receive data from Database
 func receive_data(parent_key, data_key, new_data):
+	#print("\nData received: \n%s\n%s\n%s\n\n" % [parent_key, data_key, new_data]) # Debug
+	
+	# Ensure the node dictionary exists in data
+	if not data.has(parent_key):
+		data[parent_key] = {}
+	
 	data[parent_key][data_key] = new_data

@@ -6,6 +6,7 @@ var location: Dictionary = {}
 ## Updates position every frame
 func _physics_process(_delta):
 	location["location"] = get_parent_position()
+	#print("location: ", location["location"]) # Debug
 	# Update game_state data through emitted signal
 	update_data()
 

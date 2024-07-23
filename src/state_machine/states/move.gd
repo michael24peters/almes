@@ -1,11 +1,11 @@
 extends State
 
+# AnimationTree of animation logic
+@export var animation_tree: AnimationTree
+
 # InputHandlers
 @export var movement_input_handler: InputHandler
 @export var attack_input_handler: InputHandler
-
-# AnimationTree of animation logic
-@export var animation_tree: AnimationTree
 
 # Character move speed
 @export var move_speed: float
@@ -30,7 +30,7 @@ func update(delta):
 		if direction != Vector2.ZERO: 
 			last_direction = direction 
 		# Tell state machine that direction has changed
-		emit_signal("direction_changed", last_direction, 1) 
+		emit_signal("direction_changed", last_direction) 
 	
 	if direction == Vector2.ZERO: # Enter Idle state if movement stops
 		state_transition.emit(self, "Idle")

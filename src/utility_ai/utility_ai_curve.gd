@@ -26,7 +26,7 @@ extends Curve
 enum CurveType {
 	BINARY,  ## A curve that is 0 until a threshold, then 1 afterwards.
 	LINEAR,  ## A straight line between two points.
-	POWER,  ## A simple curve with x raised to the specified power.
+	EXPONENTIAL,  ## A simple curve with x raised to the specified exponent.
 	LOGISTIC,  ## An S-shaped curve, similar to a smoothed binary curve.
 	CUSTOM,  ## A custom [Curve] described by a sequence of points.
 }
@@ -103,7 +103,7 @@ func _set_curve_type(p_curve_type: CurveType):
 	y_shift = 0.0
 
 	match curve_type:
-		CurveType.POWER:
+		CurveType.EXPONENTIAL:
 			exponent = 2
 		CurveType.LOGISTIC:
 			exponent = 10
@@ -148,7 +148,7 @@ func _update_points(npoints: int = 10) -> void:
 	elif curve_type == CurveType.LINEAR:
 		var linear = func(x): return _clamp(slope * (x - x_shift) + y_shift)
 		_add_points(linear, npoints)
-	elif curve_type == CurveType.POWER:
+	elif curve_type == CurveType.EXPONENTIAL:
 		var power = func(x): return _clamp(
 			slope * pow(x - x_shift, exponent) + y_shift
 		)
@@ -178,7 +178,7 @@ func _to_string() -> String:
 	const NAMES := {
 		CurveType.BINARY: "BINARY",
 		CurveType.LINEAR: "LINEAR",
-		CurveType.POWER: "POWER",
+		CurveType.EXPONENTIAL: "EXPONENTIAL",
 		CurveType.LOGISTIC: "LOGISTIC",
 		CurveType.CUSTOM: "CUSTOM",
 	}
