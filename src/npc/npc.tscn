@@ -1958,6 +1958,8 @@ x_shift = 0.0
 y_shift = 0.0
 
 [node name="NPC" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree")]
+collision_layer = 50
+collision_mask = 4
 script = ExtResource("1_5kxmh")
 animation_tree = NodePath("AnimationTree")
 
@@ -2022,9 +2024,9 @@ zoom = Vector2(2.5, 2.5)
 
 [node name="HealthComponent" parent="." instance=ExtResource("7_dtpou")]
 
-[node name="LoSComponent" type="Node" parent="." node_paths=PackedStringArray("entity")]
+[node name="LoSComponent" type="Node" parent="." node_paths=PackedStringArray("npc")]
 script = ExtResource("9_jobdu")
-entity = NodePath("..")
+npc = NodePath("..")
 
 [node name="HitboxComponent" parent="." instance=ExtResource("10_lqpq1")]
 collision_layer = 4
@@ -2050,7 +2052,7 @@ script = ExtResource("12_nh8lf")
 animation_tree = NodePath("../../AnimationTree")
 movement_input_handler = NodePath("InputHandler")
 attack_input_handler = NodePath("../Attack/InputHandler")
-move_speed = 100.0
+move_speed = 125.0
 parent = NodePath("../..")
 
 [node name="InputHandler" type="Node" parent="StateMachine/Move" node_paths=PackedStringArray("los_component")]
@@ -2099,9 +2101,13 @@ script = ExtResource("18_8kc7p")
 script = ExtResource("10_eba0b")
 curve = SubResource("Curve_5tct6")
 
-[node name="RemainingHP" type="Node" parent="Agent/CombatBucket/Chase"]
+[node name="RemainingHP" type="Node" parent="Agent/CombatBucket/Chase" node_paths=PackedStringArray("entity")]
 script = ExtResource("11_84ttk")
+entity = NodePath("../../../..")
 curve = SubResource("Curve_xsinm")
+invert = true
+parent_keys = Array[String](["npc"])
+data_keys = Array[String](["healthcomponent"])
 
 [node name="LoS" type="Node" parent="Agent/CombatBucket/Chase"]
 script = ExtResource("26_ohtg4")

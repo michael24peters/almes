@@ -35,6 +35,7 @@ func evaluate() -> float:
 	for consideration in considerations:
 		if consideration is Consideration:
 			var score = consideration.evaluate()
+			#print("(%s, %d)" % [consideration.name.to_lower(), score]) # Debug
 			scores.append(score)
 	
 	# Aggregate the scores

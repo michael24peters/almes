@@ -5,6 +5,8 @@ class_name Consideration
 
 # Weight function curve
 @export var curve: UtilityAICurve
+# Invert derived value passed into weight function curve
+@export var invert: bool = false
 
 # Signal to request data from Database
 signal data_request(parent_key, data_key, requester)
@@ -18,6 +20,7 @@ var data: Dictionary
 ## Returns weight of the consideration
 func evaluate() -> float:
 	request_data()
+	if invert: return curve.evaluate(1 - get_derived_value())
 	return curve.evaluate(get_derived_value())
 
 ## Calculate and return derived value
