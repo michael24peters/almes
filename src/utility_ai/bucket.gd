@@ -27,6 +27,10 @@ enum SelectionType {
 # Dictionary of action names and their utility scores
 var actions: Dictionary
 
+## Checks whether the Bucket should be active or not
+func check_active():
+	pass # To be implemented by Bucket instance
+
 ## Main method of Bucket. Update all actions then call on selector() to select an action.
 func evaluate() -> Dictionary:
 	if is_active:
@@ -44,7 +48,7 @@ func selector() -> Dictionary:
 	match selection:
 		SelectionType.HIGHEST_UTILITY:
 			var highest_utility = actions.values().max()
-			return {actions.find_key(highest_utility): highest_utility}
+			return {"name": actions.find_key(highest_utility), "utility": highest_utility}
 		
 		SelectionType.WEIGHTED_PROBABILITY:
 			return get_weighted_probability(actions)

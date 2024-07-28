@@ -10,14 +10,20 @@ func _ready():
 
 ## Add all data to game_state. Connect data signals to Database
 func traverse_tree(node):
+	# Add CharacterBody2D nodes to Database
+	if node is CharacterBody2D:
+		# Ensure the node dictionary exists in game_state
+		if not game_state.has(node.name.to_lower()):
+			game_state[node.name.to_lower()] = {}
+		
+		# Add CharacterBody2D node
+		game_state[node.name.to_lower()]["self"] = node
+		
+	
 	for child in node.get_children():
 	
+		# Add Data node to Database
 		if child is Data:
-			
-			#print("node name: ", node.name.to_lower()) # Debug
-			#print("child name: ", child.name.to_lower()) # Debug
-			#print("child data: ", child.get_data()) # Debug
-			
 			# Ensure the node dictionary exists in game_state
 			if not game_state.has(node.name.to_lower()):
 				game_state[node.name.to_lower()] = {}
@@ -30,9 +36,23 @@ func traverse_tree(node):
 			# Connect data_changed signal in Data to _on_data_changed() method in Database
 			child.connect("data_changed", Callable(self, "_on_data_changed"))
 		
+		# Allow Considerations to request Database data
 		elif child is Consideration:
-			# Connect request_data signal in Consideration to _on_request_data() method in Database
+			# Connect data_request signal in Consideration to _on_request_data() method in Database
 			child.connect("data_request", Callable(self, "_on_request_data"))
+		
+		# Allow any child with request_data() method and data_request signal,
+		# i.e. with proper infrastructure, to request Database data
+		else:
+			# Check if child has request_data() method
+			if child.has_method("request_data"):
+				var properties = child.get_property_list()
+				# Check if child has data_request signal
+				for property in properties:
+					if property.name == "data_request":
+						print("Connecting %s to Database..." % [child.name.to_lower()])
+						child.connect("data_request", Callable(self, "_on_request_data"))
+						break
 		
 		traverse_tree(child) # Recursively check all sub-trees
 

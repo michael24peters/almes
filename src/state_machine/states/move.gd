@@ -8,7 +8,7 @@ extends State
 @export var attack_input_handler: InputHandler
 
 # Character move speed
-@export var move_speed: float
+var move_speed: float
 
 var direction := Vector2.ZERO
 var last_direction := Vector2(0,1)
@@ -17,12 +17,13 @@ var last_direction := Vector2(0,1)
 func enter():
 	# Activate move animation in AnimationTree
 	animation_tree["parameters/conditions/move"] = true 
-	if parent.name.to_lower() == "npc": print("Entered Move state") # Debug
+	#if parent.name.to_lower() == "npc": print("Entered Move state") # Debug
 
 func update(delta):
 	# Get direction from input handler, which has a unique instance for each 
 		# character type
 	var new_direction = movement_input_handler.get_direction()
+	move_speed = movement_input_handler.get_move_speed()
 	
 	if new_direction != direction: # Update movement direction
 		direction = new_direction
@@ -34,12 +35,12 @@ func update(delta):
 		emit_signal("direction_changed", last_direction) 
 	
 	if direction == Vector2.ZERO: # Enter Idle state if movement stops
-		state_transition.emit(self, "Idle")
+		state_transition.emit("Idle")
 		return # Do not run the code any further
 	
 	# Send signal to attack if attack intent detected
 	if attack_input_handler.want_attack() == true:
-		state_transition.emit(self, "Attack")
+		state_transition.emit("Attack")
 	
 	# Set animation direction
 	animation_tree["parameters/Move/blend_position"] = direction 
@@ -50,3 +51,4 @@ func update(delta):
 func exit():
 	# Deactivate move animation in AnimationTree
 	animation_tree["parameters/conditions/move"] = false 
+	#if parent.name.to_lower() == "npc": print("Exited Move state") # Debug

@@ -14,8 +14,8 @@ signal data_request(parent_key, data_key, requester)
 var data: Dictionary
 
 # To be implemented by Consideration instance
-@export var parent_keys: Array[String]
-@export var data_keys: Array[String]
+var parent_keys: Array[String]
+var data_keys: Array[String]
 
 ## Returns weight of the consideration
 func evaluate() -> float:
@@ -31,10 +31,10 @@ func get_derived_value() -> float:
 func request_data():
 	# parent_keys and data_keys must not be empty
 	if parent_keys.size() == 0 or data_keys.size() == 0:
-		push_error("No data request for consideration! (parent_key.size = %s, data_key.size = %s)" % [parent_keys.size(), data_keys.size()])
+		push_error("No data request for consideration! (parent_keys.size = %s, data_keys.size = %s)" % [parent_keys.size(), data_keys.size()])
 	# parent_keys and data_keys must be the same size
 	if parent_keys.size() != data_keys.size():
-		push_error("Data request keys size do not match! (parent_key.size = %s, data_key.size = %s)" % [parent_keys.size(), data_keys.size()])
+		push_error("Data request keys size do not match! (parent_keys.size = %s, data_keys.size = %s)" % [parent_keys.size(), data_keys.size()])
 	
 	for i in range(parent_keys.size()):
 		data_request.emit(parent_keys[i], data_keys[i], self)

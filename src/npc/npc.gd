@@ -4,9 +4,11 @@ extends CharacterBody2D
 @export var animation_tree: AnimationTree
 @export var player: Player
 
+@onready var los_component = $LoSComponent
+
+signal player_exists(player: Player)
+
 func _ready():
 	# Want the animation_tree to always be active (for now)
 	animation_tree.active = true
-	for child in get_children():
-		if child is LoSComponent:
-			child.player = player
+	if player: player_exists.emit(player)

@@ -21,7 +21,7 @@ var buckets: Dictionary
 var current_bucket: Bucket
 
 var current_action: Dictionary = {"name": "", "utility": 0.0}
-signal action_changed
+signal action_changed(current_action: Dictionary)
 
 enum InertiaType {
 	TIMER, # New action can be selected after set time
@@ -51,32 +51,37 @@ func _physics_process(_delta: float):
 		
 	# Set highest priority Bucket as current Bucket
 	for bucket in buckets: # Loop through Buckets
+		buckets[bucket].check_active() # Update is_active for each Bucket
 		if buckets[bucket].is_active: # Only check active Buckets
 			# Set current bucket to highest priority bucket
 			if current_bucket == null or buckets[bucket].priority > current_bucket.priority:
+				if current_bucket != null: print("old bucket: ", current_bucket.name) # Debug
+				else: print("old bucket: null")
+				print("new bucket: ", bucket) # Debug
 				current_bucket = buckets[bucket]
+				#print("Current bucket: ", current_bucket) # Debug
 				bucket_changed = true # Changing Bucket breaks inertia
 
 	# Update current Bucket's updated selected action
 	var selected_action = current_bucket.evaluate()
+	#print("current action: ", current_action) # Debug
+	#print("selected action: ", selected_action) # Debug
 	
 	# Check inertia
-	if current_action["name"] != "" and current_action["name"] != "idle":
-		#print("current action name: ", current_action["name"]) # Debug
+	#if current_action["name"] != "" and current_action["name"] != "idle":
 		#print("inertia: ", inertia_active) # Debug
-		inertia(selected_action)
+		#inertia(selected_action)
 	#print("inertia: ", inertia_active) # Debug
 
 	# Changing Bucket breaks inertia
-	if bucket_changed: inertia_active = false
+	#if bucket_changed: inertia_active = false
 
 	if !inertia_active:
 		# Emit signal if switch to new action
 		if current_action["name"] != selected_action["name"]:
-			action_changed.emit()
+			print("Action changed from %s to %s." % [selected_action["name"], current_action["name"]])
+			action_changed.emit(current_action)
 		
-		#print("current action: ", current_action) # Debug
-		#print("selected action: ", selected_action) # Debug
 		# Update current action
 		current_action = selected_action
 
@@ -90,7 +95,7 @@ func inertia(selected_action: Dictionary, duration = 3, threshold = .1):
 		InertiaType.TIMER:
 			# Create a Timer if one doesn't exist yet
 			if !timer_created:
-				print("Timer created.") # Debug
+				#print("Timer created.") # Debug
 				timer = Timer.new() # Create timer
 				add_child(timer) # Add timer as child to Agent
 				timer.wait_time = duration # Set Timer duration
@@ -101,7 +106,8 @@ func inertia(selected_action: Dictionary, duration = 3, threshold = .1):
 			
 			# Check whether Timer ends
 			var timer_exists = find_child("Timer", true, false) # Check if Timer running
-			if !timer_exists: inertia_active = false # Inertia breaking condition (Timer ends)
+			if !timer_exists: 
+				inertia_active = false # Inertia breaking condition (Timer ends)
 		
 		InertiaType.THRESHOLD:
 			if selected_action["utility"] - current_action["utility"] >= threshold: inertia_active = false

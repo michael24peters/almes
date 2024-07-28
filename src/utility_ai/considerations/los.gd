@@ -1,11 +1,17 @@
 extends Consideration
 
-## If there is line of sight, return 0, else return 1
+var entity: CharacterBody2D
+
+func _ready():
+	self.parent_keys = ["npc", "npc"]
+	self.data_keys = ["self", "loscomponent"] 
+
+## If there is line of sight, don't idle
 func get_derived_value() -> float:
 	if data.has("npc"):
-		if data["npc"]["loscomponent"]["target"] != null: 
-			#print("Target acquired!") # Debug
+		entity = data["npc"]["self"]
+		
+		if data["npc"]["loscomponent"]["target"] == null: 
 			return 1.0
 	
-	#print("No target!") # Debug
 	return 0.0

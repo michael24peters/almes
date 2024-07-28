@@ -1960,7 +1960,7 @@ shape = SubResource("RectangleShape2D_s0gln")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("14_0v5b7")
-MAX_HP = 20.0
+MAX_HP = 10.0
 
 [node name="LocationComponent" type="Node" parent="."]
 script = ExtResource("8_u745o")
@@ -1989,7 +1989,6 @@ script = ExtResource("9_dskrl")
 animation_tree = NodePath("../../AnimationTree")
 movement_input_handler = NodePath("InputHandler")
 attack_input_handler = NodePath("../Attack/InputHandler")
-move_speed = 200.0
 parent = NodePath("../..")
 
 [node name="InputHandler" type="Node" parent="StateMachine/Move"]

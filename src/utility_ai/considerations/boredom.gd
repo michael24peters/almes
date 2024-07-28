@@ -11,8 +11,8 @@ func _process(delta: float) -> void:
 	time_passed += delta
 	
 	# Calculate the oscillating value
-	# Begins at (0,1) at "top" of cosine wave
-	derived_value = 0.5 * (cos(2.0 * PI * frequency * time_passed) + 1.0)
+	# Begins at (0,0) at "bottom" of sine wave
+	derived_value = 0.5 * (sin(2.0 * PI * frequency * (time_passed - .25)) + 1.0)
 
 func get_derived_value() -> float:
 	return derived_value

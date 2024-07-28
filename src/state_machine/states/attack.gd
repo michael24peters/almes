@@ -32,5 +32,5 @@ func _on_animation_finished(animation_name: StringName):
 		# give *all attacks* the name "attack" if its some kind of attack
 		# e.g. "attack_swing_down_right", "attack_bow_left", etc.
 	if animation_name.begins_with("swing"):
-		state_transition.emit(self, "Idle")
+		state_transition.emit("Idle")
 

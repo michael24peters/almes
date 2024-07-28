@@ -38,7 +38,6 @@ func evaluate() -> float:
 			#print("(%s, %d)" % [consideration.name.to_lower(), score]) # Debug
 			scores.append(score)
 	
-	# Aggregate the scores
 	return aggregate(scores)
 
 ## Calculate the aggregate of consideration scores according to the chosen

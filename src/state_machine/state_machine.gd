@@ -32,12 +32,7 @@ func _physics_process(delta):
 		current_state.update(delta)
 
 ## Changes from one state to another if its name is in the states Dictionary.
-func change_state(source_state : State, new_state_name : String):
-	if source_state != current_state:
-		print("Invalid change_state(): trying to change from " 
-			+ source_state.name + " but currently in: " + current_state.name)
-		return
-	
+func change_state(new_state_name : String):
 	var new_state = states.get(new_state_name.to_lower())
 	if !new_state:
 		print("new_state is empty!")
@@ -59,3 +54,13 @@ func _on_direction_changed(direction: Vector2):
 	for state in get_children():
 		if state is State and state.has_method("_on_direction_changed"):
 			state._on_direction_changed(current_direction)
+
+## Translates all Actions into appropriate State(s) and InputHandler(s)
+func _on_action_changed(current_action):
+	if current_action["name"] == "idle": 
+		print("Changing to idle state...")
+		change_state("Idle")
+	elif current_action["name"] == "wander": 
+		print("Changing to wander state...")
+		change_state("Move")
+	elif current_action["name"] == "chase": change_state("Move")
