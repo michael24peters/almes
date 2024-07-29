@@ -61,7 +61,9 @@ func _physics_process(delta) -> void:
 				# Store first colliding ray
 				ray_to_target = ray
 				break
-			else: target = null
+			else: 
+				target = null
+				ray_to_target = null
 	
 	# Update Database with target information
 	update_data()
@@ -71,7 +73,7 @@ func _physics_process(delta) -> void:
 	# Check whether to update rays based on Player being in range
 	var bodies_in_area = _view_area.get_overlapping_bodies()
 	# If Player not in range, do not update rays this frame
-	if bodies_in_area.size() == 0: return
+	#if bodies_in_area.size() == 0: return
 	
 	# Points rays in direction of player
 	if player:

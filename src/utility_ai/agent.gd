@@ -1,119 +1,125 @@
 #agent.gd
 
-## Agent decides what actions to perform.
-##
-## Agent:StateMachine::UtilityAI:States. The Agent is the manager of the
-## Utility AI behavior, evaluating whether to perform an action based on the 
-## utility scores (interpretable as the "desire" to perform or "value" of
-## performing a given action).
-##
-## The flow of Agent is as follows:
-## 1. Load all buckets.
-## 2. Select the highest utility, active bucket.
-## 3. Select the bucket's selected action if there is no inertia active.
-
 extends Node
 class_name Agent
 
 @export var state_machine: StateMachine
 
-var buckets: Dictionary
-var current_bucket: Bucket
+# Dictionary of action names and their utility scores
+var actions: Dictionary
 
 var current_action: Dictionary = {"name": "", "utility": 0.0}
 signal action_changed(current_action: Dictionary)
 
-enum InertiaType {
-	TIMER, # New action can be selected after set time
-	THRESHOLD # Selected utility - current utility >= threshold to change
+# Methods of the selection for selector() method
+enum SelectionType {
+	HIGHEST_UTILITY, # The highest utility action is chosen
+	WEIGHTED_PROBABILITY, # Probability of selection proportional to utility
+	TOP_UTILITY_PROBABILITY, # Weighted prob. of top X utility values
+	PERCENTILE_PROBABILITY # Weighted prob. of actions at or above Xth percentile
 }
 
-# Inertia method could be different for each action.
-# This is specific to implementation and not defined here.
-# Default inertia method is TIMER
-@export var inertia_method : InertiaType = InertiaType.TIMER
-var inertia_active: bool = false
-
-# Timer variables
-var timer_created = false
-var timer # Declare timer variable here for scope
+# Chosen SelectionType for selector() method to use
+@export var selection: SelectionType
+# Number of top utility values to use for the TOP_UTILITY_PROBABILITY case
+@export var num_top_actions: int = 3
+# Percentile range of acceptance for the PERCENTILE_PROBABILITY case
+@export var percentile: float = .9
 
 func _physics_process(_delta: float):
 	# Sanity check
-	if buckets.size() == 0: push_error("No buckets found!")
+	if actions.size() == 0: push_error("No buckets found!")
 	
-	var bucket_changed = false
+	# Populate actions with action names and updated utility scores
+	for child in self.get_children():
+		if child is Action:
+			actions[child.name.to_lower()] = child.evaluate()
 	
-	# Update all buckets
-	for child in get_children():
-		if child is Bucket:
-			buckets[child.name.to_lower()] = child
-		
-	# Set highest priority Bucket as current Bucket
-	for bucket in buckets: # Loop through Buckets
-		buckets[bucket].check_active() # Update is_active for each Bucket
-		if buckets[bucket].is_active: # Only check active Buckets
-			# Set current bucket to highest priority bucket
-			if current_bucket == null or buckets[bucket].priority > current_bucket.priority:
-				if current_bucket != null: print("old bucket: ", current_bucket.name) # Debug
-				else: print("old bucket: null")
-				print("new bucket: ", bucket) # Debug
-				current_bucket = buckets[bucket]
-				#print("Current bucket: ", current_bucket) # Debug
-				bucket_changed = true # Changing Bucket breaks inertia
-
-	# Update current Bucket's updated selected action
-	var selected_action = current_bucket.evaluate()
-	#print("current action: ", current_action) # Debug
-	#print("selected action: ", selected_action) # Debug
+	#print("actions: ", actions) # Debug
 	
-	# Check inertia
-	#if current_action["name"] != "" and current_action["name"] != "idle":
-		#print("inertia: ", inertia_active) # Debug
-		#inertia(selected_action)
-	#print("inertia: ", inertia_active) # Debug
+	var selected_action = selector()
+	#print("selected: %s, utility: %d" % [selected_action["name"], selected_action["utility"]]) # Debug
+	#print("selected action: ", selected_action)
 
-	# Changing Bucket breaks inertia
-	#if bucket_changed: inertia_active = false
-
-	if !inertia_active:
-		# Emit signal if switch to new action
-		if current_action["name"] != selected_action["name"]:
-			print("Action changed from %s to %s." % [selected_action["name"], current_action["name"]])
-			action_changed.emit(current_action)
-		
+	# Emit signal if switch to new action
+	if current_action["name"] != selected_action["name"]:
 		# Update current action
 		current_action = selected_action
+		action_changed.emit(current_action)
 
-## duration: length of timer in seconds
-## threshold: current_action utility - selected_action utility >= threshold to change action
-func inertia(selected_action: Dictionary, duration = 3, threshold = .1):
-	inertia_active = true # Set inertia to false only if inertia is broken
-	
-	match inertia_method:
+
+## Selects action from Bucket based on chosen selection method.
+func selector() -> Dictionary:
+	match selection:
+		SelectionType.HIGHEST_UTILITY:
+			var highest_utility = actions.values().max()
+			return {"name": actions.find_key(highest_utility), "utility": highest_utility}
 		
-		InertiaType.TIMER:
-			# Create a Timer if one doesn't exist yet
-			if !timer_created:
-				#print("Timer created.") # Debug
-				timer = Timer.new() # Create timer
-				add_child(timer) # Add timer as child to Agent
-				timer.wait_time = duration # Set Timer duration
-				timer.one_shot = true # Prevents looping Timer
-				timer.start() # Start Timer
-				timer.connect("timeout", Callable(self, "_on_timer_timeout"))
-				timer_created = true # Timer is now created
+		SelectionType.WEIGHTED_PROBABILITY:
+			return get_weighted_probability(actions)
 			
-			# Check whether Timer ends
-			var timer_exists = find_child("Timer", true, false) # Check if Timer running
-			if !timer_exists: 
-				inertia_active = false # Inertia breaking condition (Timer ends)
+		SelectionType.TOP_UTILITY_PROBABILITY:
+			if num_top_actions < 1: push_error("Cannot have <1 top score!") # Sanity check
+			
+			var top_actions: Dictionary # Stores the top X actions
+			
+			# Sort action utilities
+			var sorted_values = actions.values()
+			sorted_values.sort()
+			
+			if sorted_values.size() < num_top_actions: # Limit top action pool by amount available
+				num_top_actions = sorted_values.size()
+				push_warning("%d actions but %d top actions allowed." % [sorted_values.size(), num_top_actions])
+			
+			sorted_values = sorted_values.slice(-num_top_actions) # Keep only the top X utility values
+			
+			# Go through sorted_values array in reverse order for descending order
+			for i in range(sorted_values.size() - 1, -1, -1):
+				top_actions[actions.find_key(sorted_values[i])] = sorted_values[i] # Get top X utility actions
+			
+			# Return weighted probability on top actions
+			return get_weighted_probability(top_actions)
 		
-		InertiaType.THRESHOLD:
-			if selected_action["utility"] - current_action["utility"] >= threshold: inertia_active = false
+		SelectionType.PERCENTILE_PROBABILITY:
+			var utilities = actions.values()
+			utilities.sort() # Sort the utility values in ascending order
+			
+			# Determine the index and value where percentile threshold is reached
+			var cutoff_index = int(ceil(percentile * utilities.size())) - 1
+			var percentile_value = utilities[cutoff_index] # Value closest to percentile threshold
+			
+			var top_actions: Dictionary = {} # Stores the top percentile actions
+			
+			# Find actions in percentile range
+			for action in actions:
+				if actions[action] >= percentile_value:
+					top_actions[action] = actions[action]
+			
+			# Perform weighted probability selection on actions in percentile range
+			return get_weighted_probability(top_actions)
+		
+	# Return error if no matches in switch case
+	push_error("Unrecognized SelectionType: %d" % [selection])
+	return {"name": "", "utility": 0.0}
 
-## Remove inertia Timer when it ends
-func _on_timer_timeout():
-	var timer = get_tree().root.get_node_or_null((self.get_path() as String) + "/" + "Timer")
-	if timer: timer.queue_free()
-	else: push_error("No Timer found!")
+## Calculates probability weights for each action based on utility value then selects an action.
+func get_weighted_probability(actions_: Dictionary) -> Dictionary:
+	var weighted_actions = actions_.duplicate()
+	var sum = weighted_actions.values().reduce(func(accum, utility): return accum + utility)
+	
+	var seed = randf() # Generate a pseudo-random float in range [0,1]
+	var cumulative_weight = 0.0
+	
+	for action in weighted_actions: 
+		# Weight action utility scores. The sum of these weights is 1.
+		weighted_actions[action] /= sum
+		
+		# Add current weight to running total
+		cumulative_weight += weighted_actions[action]
+		# If action weight range contains seed, selected action found
+		if seed <= cumulative_weight: return {"name": action, "utility": actions_[action]}
+		# If seed is greater than cumulative weight, check the next action
+	
+	# Return error if no actions found
+	push_error("No action elements found!")
+	return {"name": "", "utility": 0.0}

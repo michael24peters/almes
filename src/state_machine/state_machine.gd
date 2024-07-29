@@ -58,9 +58,11 @@ func _on_direction_changed(direction: Vector2):
 ## Translates all Actions into appropriate State(s) and InputHandler(s)
 func _on_action_changed(current_action):
 	if current_action["name"] == "idle": 
-		print("Changing to idle state...")
+		#print("Changing to idle state...") # Debug
 		change_state("Idle")
 	elif current_action["name"] == "wander": 
-		print("Changing to wander state...")
+		#print("Changing to wander state...") # Debug
 		change_state("Move")
-	elif current_action["name"] == "chase": change_state("Move")
+	elif current_action["name"] == "chase": 
+		#print("Changing to chase state...") # Debug
+		change_state("Move")

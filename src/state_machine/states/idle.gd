@@ -16,7 +16,7 @@ func enter():
 	animation_tree["parameters/Idle/blend_position"] = direction
 	#print("Entered Idle state")
 
-func update(_delta: float): # TODO: intent to act vs acting distinction
+func update(_delta: float):
 	# Send signal to move if movement keys detected
 	if movement_input_handler.want_move():
 		state_transition.emit("Move")

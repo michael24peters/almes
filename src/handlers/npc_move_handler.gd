@@ -36,11 +36,8 @@ func get_direction() -> Vector2:
 			# Get direction
 			if los_component.ray_to_target != null:
 				direction = los_component.ray_to_target.target_position
-			else: direction = Vector2.ZERO
-			
-			# Normalize direction
-			if direction != Vector2.ZERO:
 				direction = direction.normalized()
+			else: direction = Vector2.ZERO
 	
 	return direction
 
