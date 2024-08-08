@@ -13,6 +13,7 @@ var ray_count = int(angle_cone_of_vision / angle_between_rays)
 
 var target: CharacterBody2D = null
 var ray_to_target: RayCast2D = null
+signal target_found(entity: CharacterBody2D, ray: RayCast2D)
 
 var player: Player = null
 @onready var npc: CharacterBody2D = $".."
@@ -34,7 +35,7 @@ func _ready():
 	
 
 ## Creates a cone of rays from the NPC, acting as a "line of sight".
-func generate_ray_casts() -> void:	
+func generate_ray_casts() -> void:
 	for index in range(ray_count):
 		# Create ray
 		var ray := RayCast2D.new()
@@ -44,7 +45,7 @@ func generate_ray_casts() -> void:
 		ray.global_position = npc.global_position
 		ray.target_position = Vector2.DOWN.rotated(angle) * max_view_distance
 		# Set collision masks with bitmap (Player, Objects, Terrain)
-		ray.collision_mask = 1 | 4 | 16
+		ray.collision_mask = 1 << 0 # TODO: better collision masks (was 1, 4, 16)
 		# Add as child to LoSComponent
 		self.add_child(ray)
 		# Activate ray
@@ -60,6 +61,7 @@ func _physics_process(delta) -> void:
 				target = ray.get_collider()
 				# Store first colliding ray
 				ray_to_target = ray
+				target_found.emit(target, ray_to_target)
 				break
 			else: 
 				target = null

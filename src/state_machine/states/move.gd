@@ -45,6 +45,10 @@ func update(delta):
 	# Set animation direction
 	animation_tree["parameters/Move/blend_position"] = direction 
 	
+	# Get steering momentum
+	#var momentum = parent.velocity - direction * move_speed
+	# Get new velocity based on steering momentum
+	#parent.velocity += momentum * delta
 	parent.velocity = direction * move_speed # Set character velocity
 	parent.move_and_slide() # Move character
 

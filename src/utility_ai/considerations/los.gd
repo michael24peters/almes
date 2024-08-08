@@ -6,8 +6,8 @@ func _ready():
 
 ## Return 1.0 if there is line of sight, else 0
 func get_derived_value() -> float:
-	if data.has("npc"):
-		if data["npc"]["loscomponent"]["target"] != null: 
-			return 1.0
-	
-	return 0.0
+	#if data.has("npc"):
+		#if data["npc"]["loscomponent"]["target"] != null: 
+			#return 1.0
+	#return 0.0
+	return 1.0 # TODO: LoS causes pursue mode
