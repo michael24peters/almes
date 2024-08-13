@@ -21,21 +21,15 @@ func _ready():
 	print("Node path 2:", $"../../TileMap") # Debug
 
 ## Get entities of interest (for now CharacterBody2D's, excl. self)
-# NOTE: Does not update if new entities are added after game start
+## NOTE: Does not update if new entities are added after game start
 func traverse_tree(node):
 	# Loop through all children of Game scene
-	# NOTE: This will ignore any CharacterBody2D nodes that are not direct
-	# descendents of Game scene.
 	for child in node.get_children():
 		if child is CharacterBody2D and child != self:
-			print("found interest!")
-			print("child = ", child)
 			interests.push_back(child)
-			print("interests = ", interests)
-	
-		traverse_tree(child)
+		traverse_tree(child) # Traverse sub-tree
 
-func get_interests():
+func get_interests() -> Array:
 	traverse_tree(get_tree().root)
 	print("final interests = ", interests)
 	return interests
@@ -44,20 +38,4 @@ func get_interests():
 ## TileMap.
 # NOTE: Does not update if new entities are added after game start
 func get_dangers() -> Array:
-	# Array of everything the NPC wants to stay away from
-	var dangers: Array = []
-	
-	# Set collision layer to 5 (objects)
-	var target_collision_layer = (1 << 4)
-
-	# Get TileMap coordsall used cells in the "Objects" layer, which contains 
-	# all obstacles; used_cells is of type Vector2i[]
-	var used_cells = tile_map.get_used_cells(0)
-	
-	for cell in used_cells:
-		# Convert tile coordinates to local coordinates
-		var local_position = tile_map.map_to_local(cell)
-		var global_position = tile_map.to_global(local_position)
-		dangers.push_back(global_position)
-	
-	return dangers
+	return [] # TODO

@@ -32,7 +32,6 @@ func _ready():
 	generate_ray_casts()
 	# Set view area to match ray distance
 	_view_area_collision.shape.radius = max_view_distance
-	
 
 ## Creates a cone of rays from the NPC, acting as a "line of sight".
 func generate_ray_casts() -> void:
@@ -45,7 +44,7 @@ func generate_ray_casts() -> void:
 		ray.global_position = npc.global_position
 		ray.target_position = Vector2.DOWN.rotated(angle) * max_view_distance
 		# Set collision masks with bitmap (Player, Objects, Terrain)
-		ray.collision_mask = 1 << 0 # TODO: better collision masks (was 1, 4, 16)
+		ray.collision_mask = 1 << 0 | 1 << 4 | 1 << 5 # TODO: pursue when no LoS
 		# Add as child to LoSComponent
 		self.add_child(ray)
 		# Activate ray
@@ -63,7 +62,7 @@ func _physics_process(delta) -> void:
 				ray_to_target = ray
 				target_found.emit(target, ray_to_target)
 				break
-			else: 
+			else: # TODO: pursue when no LoS
 				target = null
 				ray_to_target = null
 	
