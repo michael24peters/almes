@@ -37,6 +37,7 @@ func get_direction() -> Vector2:
 		MOVE_TYPE.Chase:
 			if los_component.ray_to_target != null:
 				direction = los_component.ray_to_target.target_position
+				direction = direction.normalized()
 			else: direction = Vector2.ZERO
 	
 	return direction

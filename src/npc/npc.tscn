@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://b4i12qhpcxfrx"]
+[gd_scene load_steps=101 format=3 uid="uid://b4i12qhpcxfrx"]
 
 [ext_resource type="Script" path="res://src/npc/npc.gd" id="1_5kxmh"]
 [ext_resource type="Texture2D" uid="uid://bwfnsot5p0xw8" path="res://assets/sprites/flare/char/hero_components/longsword.png" id="1_dyg2s"]
@@ -22,6 +22,10 @@
 [ext_resource type="Script" path="res://src/utility_ai/considerations/threat.gd" id="18_tlvv3"]
 [ext_resource type="Script" path="res://src/utility_ai/considerations/base.gd" id="20_4btfo"]
 [ext_resource type="Script" path="res://src/utility_ai/considerations/boredom.gd" id="21_aidyj"]
+[ext_resource type="Script" path="res://src/utility_ai/considerations/distance_from_target.gd" id="24_x4714"]
+[ext_resource type="Script" path="res://src/utility_ai/considerations/dead.gd" id="25_5fxb1"]
+[ext_resource type="Script" path="res://src/utility_ai/considerations/in_range.gd" id="25_o2fod"]
+[ext_resource type="Script" path="res://src/utility_ai/considerations/has_weapon.gd" id="26_g5eje"]
 [ext_resource type="Script" path="res://src/utility_ai/considerations/los.gd" id="26_ohtg4"]
 
 [sub_resource type="Animation" id="Animation_0lglr"]
@@ -1908,7 +1912,7 @@ size = Vector2(11, 20)
 [sub_resource type="CircleShape2D" id="CircleShape2D_8tthq"]
 radius = 1.0
 
-[sub_resource type="Curve" id="Curve_uged6"]
+[sub_resource type="Curve" id="Curve_dh0ys"]
 _data = [Vector2(0, 0), 0.0, 1.0, 1, 1, Vector2(0.1, 0.1), 1.0, 1.0, 1, 1, Vector2(0.2, 0.2), 1.0, 1.0, 1, 1, Vector2(0.3, 0.3), 1.0, 1.0, 1, 1, Vector2(0.4, 0.4), 1.0, 1.0, 1, 1, Vector2(0.5, 0.5), 1.0, 1.0, 1, 1, Vector2(0.6, 0.6), 1.0, 1.0, 1, 1, Vector2(0.7, 0.7), 1.0, 1.0, 1, 1, Vector2(0.8, 0.8), 1.0, 1.0, 1, 1, Vector2(0.9, 0.9), 1.0, 1.0, 1, 1, Vector2(1, 1), 1.0, 0.0, 1, 1]
 point_count = 11
 script = ExtResource("14_uydka")
@@ -1918,7 +1922,7 @@ slope = 1
 x_shift = 0.0
 y_shift = 0.0
 
-[sub_resource type="Curve" id="Curve_dh0ys"]
+[sub_resource type="Curve" id="Curve_uged6"]
 _data = [Vector2(0, 0), 0.0, 1.0, 1, 1, Vector2(0.1, 0.1), 1.0, 1.0, 1, 1, Vector2(0.2, 0.2), 1.0, 1.0, 1, 1, Vector2(0.3, 0.3), 1.0, 1.0, 1, 1, Vector2(0.4, 0.4), 1.0, 1.0, 1, 1, Vector2(0.5, 0.5), 1.0, 1.0, 1, 1, Vector2(0.6, 0.6), 1.0, 1.0, 1, 1, Vector2(0.7, 0.7), 1.0, 1.0, 1, 1, Vector2(0.8, 0.8), 1.0, 1.0, 1, 1, Vector2(0.9, 0.9), 1.0, 1.0, 1, 1, Vector2(1, 1), 1.0, 0.0, 1, 1]
 point_count = 11
 script = ExtResource("14_uydka")
@@ -1949,6 +1953,46 @@ x_shift = 0.0
 y_shift = 1.0
 
 [sub_resource type="Curve" id="Curve_4d1xc"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+script = ExtResource("14_uydka")
+curve_type = 0
+exponent = 1
+slope = 1
+x_shift = 0.0
+y_shift = 0.0
+
+[sub_resource type="Curve" id="Curve_lnumj"]
+_data = [Vector2(0, 0), 0.0, 1.0, 1, 1, Vector2(0.1, 0.1), 1.0, 1.0, 1, 1, Vector2(0.2, 0.2), 1.0, 1.0, 1, 1, Vector2(0.3, 0.3), 1.0, 1.0, 1, 1, Vector2(0.4, 0.4), 1.0, 1.0, 1, 1, Vector2(0.5, 0.5), 1.0, 1.0, 1, 1, Vector2(0.6, 0.6), 1.0, 1.0, 1, 1, Vector2(0.7, 0.7), 1.0, 1.0, 1, 1, Vector2(0.8, 0.8), 1.0, 1.0, 1, 1, Vector2(0.9, 0.9), 1.0, 1.0, 1, 1, Vector2(1, 1), 1.0, 0.0, 1, 1]
+point_count = 11
+script = ExtResource("14_uydka")
+curve_type = 1
+exponent = 1
+slope = 1
+x_shift = 0.0
+y_shift = 0.0
+
+[sub_resource type="Curve" id="Curve_raqas"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+script = ExtResource("14_uydka")
+curve_type = 0
+exponent = 1
+slope = 1
+x_shift = 0.0
+y_shift = 0.0
+
+[sub_resource type="Curve" id="Curve_6df12"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+script = ExtResource("14_uydka")
+curve_type = 0
+exponent = 1
+slope = 1
+x_shift = 0.0
+y_shift = 0.0
+
+[sub_resource type="Curve" id="Curve_ihs7b"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 script = ExtResource("14_uydka")
@@ -2079,19 +2123,19 @@ agent = NodePath("../../../Agent")
 script = ExtResource("7_o3rxq")
 state_machine = NodePath("../StateMachine")
 
-[node name="Wander" type="Node" parent="Agent"]
-script = ExtResource("18_8kc7p")
-
-[node name="Boredom" type="Node" parent="Agent/Wander"]
-script = ExtResource("21_aidyj")
-curve = SubResource("Curve_uged6")
-
 [node name="Idle" type="Node" parent="Agent"]
 script = ExtResource("18_8kc7p")
 
 [node name="Base" type="Node" parent="Agent/Idle"]
 script = ExtResource("20_4btfo")
 curve = SubResource("Curve_dh0ys")
+
+[node name="Wander" type="Node" parent="Agent"]
+script = ExtResource("18_8kc7p")
+
+[node name="Boredom" type="Node" parent="Agent/Wander"]
+script = ExtResource("21_aidyj")
+curve = SubResource("Curve_uged6")
 
 [node name="Chase" type="Node" parent="Agent"]
 script = ExtResource("18_8kc7p")
@@ -2109,7 +2153,30 @@ invert = true
 script = ExtResource("26_ohtg4")
 curve = SubResource("Curve_4d1xc")
 
+[node name="DistanceFromTarget" type="Node" parent="Agent/Chase"]
+script = ExtResource("24_x4714")
+curve = SubResource("Curve_lnumj")
+
+[node name="Attack" type="Node" parent="Agent"]
+script = ExtResource("18_8kc7p")
+
+[node name="InRange" type="Node" parent="Agent/Attack"]
+script = ExtResource("25_o2fod")
+curve = SubResource("Curve_raqas")
+
+[node name="HasWeapon" type="Node" parent="Agent/Attack"]
+script = ExtResource("26_g5eje")
+curve = SubResource("Curve_6df12")
+
+[node name="Die" type="Node" parent="Agent"]
+script = ExtResource("18_8kc7p")
+
+[node name="Dead" type="Node" parent="Agent/Die"]
+script = ExtResource("25_5fxb1")
+curve = SubResource("Curve_ihs7b")
+
 [connection signal="player_exists" from="." to="LoSComponent" method="_on_player_exists"]
+[connection signal="animation_finished" from="AnimationTree" to="StateMachine/Attack" method="_on_animation_finished"]
 [connection signal="direction_changed" from="StateMachine/Move" to="LoSComponent" method="_on_direction_changed"]
 [connection signal="action_changed" from="Agent" to="StateMachine" method="_on_action_changed"]
 [connection signal="action_changed" from="Agent" to="StateMachine/Move/InputHandler" method="_on_agent_action_changed"]

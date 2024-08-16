@@ -1,17 +1,17 @@
 extends Consideration
 
-## To be implemented in instance of Consideration class.
-func calculate_derived_value() -> float:
-	return 0.0
+func _ready():
+	self.parent_keys = ["npc"]
+	self.data_keys = ["loscomponent"] 
 
-## Receieve requested data from Dictionary of data (usually GameState's 
-## game_state_data variable).
-#func receive_data(data_key, data):
-	#game_values[data_key] = data.get(data_key)
-	#print("Data received: %s : %s", [data_key, data.to_string()]) # Debug
-#
-### To be implemented in instanced Consideration; generic implementation
-### commented below.
-#func request_data():
-	##data_requested.emit(data_key, self)
-	#pass
+func get_derived_value() -> float:
+	if data.has("npc"):
+		var ray_to_target = data["npc"]["loscomponent"]["ray_to_target"]
+		if ray_to_target is RayCast2D: 
+			var origin = ray_to_target.global_position
+			var collision_point = ray_to_target.get_collision_point()
+			var distance = origin.distance_to(collision_point)
+			# Anything beyond 1000 is beyond chase-worthy
+			return clamp(1.0 - distance / 1000.0, 0.0, 1.0)
+			
+	return 0.0

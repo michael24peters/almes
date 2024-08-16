@@ -39,9 +39,11 @@ func change_state(new_state_name : String):
 		return
 		
 	if current_state:
+		print("exiting ", current_state) # Debug
 		current_state.exit()
 	
 	current_state = new_state
+	print("entering ", current_state) # Debug
 	current_state.enter()
 
 ## Signal handler for changing movement directions. 
@@ -57,6 +59,7 @@ func _on_direction_changed(direction: Vector2):
 
 ## Translates all Actions into appropriate State(s) and InputHandler(s)
 func _on_action_changed(current_action):
+	print("action changed")
 	if current_action["name"] == "idle": 
 		#print("Changing to idle state...") # Debug
 		change_state("Idle")
@@ -64,5 +67,8 @@ func _on_action_changed(current_action):
 		#print("Changing to wander state...") # Debug
 		change_state("Move")
 	elif current_action["name"] == "chase": 
-		#print("Changing to chase state...") # Debug
+		print("Changing to chase state...") # Debug
 		change_state("Move")
+	elif current_action["name"] == "attack":
+		print("Changing to attack state...") # Debug
+		change_state("Attack")

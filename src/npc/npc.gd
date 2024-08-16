@@ -16,6 +16,7 @@ var interests: Array
 func _ready():
 	# Want the animation_tree to always be active (for now)
 	animation_tree.active = true
+	
 	if player: player_exists.emit(player)
 	print("Node path:", $"../TileMap") # Debug
 	print("Node path 2:", $"../../TileMap") # Debug
