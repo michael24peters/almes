@@ -1904,7 +1904,7 @@ states/Idle/position = Vector2(384.66, 100.034)
 states/Move/node = SubResource("AnimationNodeBlendSpace2D_3ob5o")
 states/Move/position = Vector2(553.16, 103.037)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_p6shg"), "Idle", "Move", SubResource("AnimationNodeStateMachineTransition_5loq0"), "Move", "Idle", SubResource("AnimationNodeStateMachineTransition_uwfoc"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_gllhc"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_g8tyc"), "Attack", "Move", SubResource("AnimationNodeStateMachineTransition_ic3ay"), "Move", "Attack", SubResource("AnimationNodeStateMachineTransition_jif56")]
-graph_offset = Vector2(-38.9449, 20.025)
+graph_offset = Vector2(2.72509, 83.1825)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2o42"]
 size = Vector2(11, 20)
@@ -2092,32 +2092,28 @@ shape = SubResource("RectangleShape2D_d2o42")
 script = ExtResource("10_5p2ag")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "movement_input_handler", "attack_input_handler")]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree")]
 script = ExtResource("11_qkj1w")
 animation_tree = NodePath("../../AnimationTree")
-movement_input_handler = NodePath("../Move/InputHandler")
-attack_input_handler = NodePath("../Attack/InputHandler")
 
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "movement_input_handler", "attack_input_handler", "parent")]
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree")]
 script = ExtResource("12_nh8lf")
 animation_tree = NodePath("../../AnimationTree")
-movement_input_handler = NodePath("InputHandler")
-attack_input_handler = NodePath("../Attack/InputHandler")
-parent = NodePath("../..")
 
 [node name="InputHandler" type="Node" parent="StateMachine/Move" node_paths=PackedStringArray("los_component")]
 script = ExtResource("13_8voib")
 los_component = NodePath("../../../LoSComponent")
 
-[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("movement_input_handler", "attack_input_handler", "animation_tree")]
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree")]
 script = ExtResource("14_r887n")
-movement_input_handler = NodePath("../Move/InputHandler")
-attack_input_handler = NodePath("InputHandler")
 animation_tree = NodePath("../../AnimationTree")
 
 [node name="InputHandler" type="Node" parent="StateMachine/Attack" node_paths=PackedStringArray("agent")]
 script = ExtResource("15_kr2uo")
 agent = NodePath("../../../Agent")
+
+[node name="Timer" type="Timer" parent="StateMachine/Attack"]
+one_shot = true
 
 [node name="Agent" type="Node" parent="." node_paths=PackedStringArray("state_machine")]
 script = ExtResource("7_o3rxq")
@@ -2177,6 +2173,8 @@ curve = SubResource("Curve_ihs7b")
 
 [connection signal="player_exists" from="." to="LoSComponent" method="_on_player_exists"]
 [connection signal="animation_finished" from="AnimationTree" to="StateMachine/Attack" method="_on_animation_finished"]
-[connection signal="direction_changed" from="StateMachine/Move" to="LoSComponent" method="_on_direction_changed"]
-[connection signal="action_changed" from="Agent" to="StateMachine" method="_on_action_changed"]
+[connection signal="direction_changed" from="StateMachine/Move" to="." method="_on_direction_changed"]
+[connection signal="attack_finished" from="StateMachine/Attack" to="." method="_on_attack_finished"]
+[connection signal="timeout" from="StateMachine/Attack/Timer" to="." method="_on_timer_timeout"]
+[connection signal="action_changed" from="Agent" to="." method="_on_action_changed"]
 [connection signal="action_changed" from="Agent" to="StateMachine/Move/InputHandler" method="_on_agent_action_changed"]

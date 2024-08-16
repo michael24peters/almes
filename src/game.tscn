@@ -1198,13 +1198,12 @@ y_sort_enabled = true
 position = Vector2(369, 395)
 collision_mask = 57
 
-[node name="NPC" parent="." node_paths=PackedStringArray("player", "tile_map") instance=ExtResource("5_1bydq")]
+[node name="NPC" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_1bydq")]
 z_index = 2
 y_sort_enabled = true
 position = Vector2(90, 258)
 collision_mask = 56
 player = NodePath("../Player")
-tile_map = NodePath("../TileMap")
 
 [node name="GameState" type="Node" parent="."]
 script = ExtResource("4_0hy2o")

@@ -1,26 +1,23 @@
 extends State
 
-# InputHandlers
-@export var movement_input_handler: InputHandler
-# Makes the state_transition check for Attack state generic
-@export var attack_input_handler: InputHandler
-
 # AnimationTree of animation logic
 @export var animation_tree: AnimationTree
 
 var direction := Vector2.ZERO # Default face downwards when game starts
 
+signal attack_finished
+
 func enter():
-	print("entering attack") # Debug
 	# Activate attack animation in AnimationTree
 	animation_tree["parameters/conditions/attack"] = true 
 	# Set direction, which only needs to be defined upon entering Attack state
 	animation_tree["parameters/Attack/blend_position"] = direction
+	print("Entered Attack state") # Debug
 
 func exit():
-	print("exited attack") # Debug
 	# Deactivate attack animation in AnimationTree
 	animation_tree["parameters/conditions/attack"] = false
+	print("Exited Attack state") # Debug
 
 # Update direction based from StateMachine instructions, i.e. other states
 func _on_direction_changed(new_direction: Vector2): 
@@ -33,8 +30,6 @@ func _on_animation_finished(animation_name: StringName):
 		# the road. For now, everything swings so it's fine. Probably best to 
 		# give *all attacks* the name "attack" if its some kind of attack
 		# e.g. "attack_swing_down_right", "attack_bow_left", etc.
-	print("finished animation") # Debug
 	if animation_name.begins_with("swing"):
-		print("here!") # Debug
-		state_transition.emit("Idle")
+		attack_finished.emit()
 

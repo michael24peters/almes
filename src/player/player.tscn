@@ -1897,10 +1897,12 @@ graph_offset = Vector2(-141.92, -5.055)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s0gln"]
 size = Vector2(12, 20)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree", "move_handler", "attack_handler")]
 collision_mask = 61
 script = ExtResource("1_4g8rv")
 animation_tree = NodePath("AnimationTree")
+move_handler = NodePath("StateMachine/Move/InputHandler")
+attack_handler = NodePath("StateMachine/Attack/InputHandler")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1978,26 +1980,19 @@ shape = SubResource("RectangleShape2D_s0gln")
 script = ExtResource("7_ifugc")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "movement_input_handler", "attack_input_handler")]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree")]
 script = ExtResource("8_gkuja")
 animation_tree = NodePath("../../AnimationTree")
-movement_input_handler = NodePath("../Move/InputHandler")
-attack_input_handler = NodePath("../Attack/InputHandler")
 
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree", "movement_input_handler", "attack_input_handler", "parent")]
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree")]
 script = ExtResource("9_dskrl")
 animation_tree = NodePath("../../AnimationTree")
-movement_input_handler = NodePath("InputHandler")
-attack_input_handler = NodePath("../Attack/InputHandler")
-parent = NodePath("../..")
 
 [node name="InputHandler" type="Node" parent="StateMachine/Move"]
 script = ExtResource("10_c5x7d")
 
-[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("movement_input_handler", "attack_input_handler", "animation_tree")]
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("animation_tree")]
 script = ExtResource("11_p7jc7")
-movement_input_handler = NodePath("../Move/InputHandler")
-attack_input_handler = NodePath("InputHandler")
 animation_tree = NodePath("../../AnimationTree")
 
 [node name="InputHandler" type="Node" parent="StateMachine/Attack"]
@@ -2010,3 +2005,5 @@ zoom = Vector2(2.5, 2.5)
 [connection signal="died" from="HealthComponent" to="HitboxComponent" method="_on_died"]
 [connection signal="damage_taken" from="HitboxComponent" to="HealthComponent" method="damage"]
 [connection signal="hp_received" from="HitboxComponent" to="HealthComponent" method="heal"]
+[connection signal="direction_changed" from="StateMachine/Move" to="." method="_on_direction_changed"]
+[connection signal="attack_finished" from="StateMachine/Attack" to="." method="_on_attack_finished"]
