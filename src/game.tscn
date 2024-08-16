@@ -1202,7 +1202,6 @@ collision_mask = 57
 z_index = 2
 y_sort_enabled = true
 position = Vector2(90, 258)
-collision_mask = 56
 player = NodePath("../Player")
 
 [node name="GameState" type="Node" parent="."]

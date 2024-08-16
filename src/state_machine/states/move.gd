@@ -18,7 +18,7 @@ signal direction_changed(last_direction: Vector2)
 func enter():
 	# Activate move animation in AnimationTree
 	animation_tree["parameters/conditions/move"] = true 
-	print("Entered Move state") # Debug
+	#print("Entered Move state") # Debug
 
 func update(delta):
 	# Get direction from input handler, which has a unique instance for each 

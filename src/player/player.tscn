@@ -10,10 +10,10 @@
 [ext_resource type="Script" path="res://src/state_machine/states/idle.gd" id="8_gkuja"]
 [ext_resource type="Script" path="res://src/components/scripts/location_component.gd" id="8_u745o"]
 [ext_resource type="Script" path="res://src/state_machine/states/move.gd" id="9_dskrl"]
+[ext_resource type="Script" path="res://src/components/scripts/hurtbox_component.gd" id="9_tkmi6"]
 [ext_resource type="Script" path="res://src/handlers/player_move_handler.gd" id="10_c5x7d"]
 [ext_resource type="Script" path="res://src/state_machine/states/attack.gd" id="11_p7jc7"]
 [ext_resource type="Script" path="res://src/handlers/player_attack_handler.gd" id="12_rn05e"]
-[ext_resource type="Script" path="res://src/components/scripts/hitbox_component.gd" id="13_bbgsu"]
 [ext_resource type="Script" path="res://src/components/scripts/health_component.gd" id="14_0v5b7"]
 
 [sub_resource type="Animation" id="Animation_0lglr"]
@@ -1967,11 +1967,11 @@ MAX_HP = 10.0
 [node name="LocationComponent" type="Node" parent="."]
 script = ExtResource("8_u745o")
 
-[node name="HitboxComponent" type="Area2D" parent="."]
+[node name="HurtboxComponent" type="Area2D" parent="."]
 collision_mask = 8
-script = ExtResource("13_bbgsu")
+script = ExtResource("9_tkmi6")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 z_index = 2
 position = Vector2(-1.53, -0.725998)
 shape = SubResource("RectangleShape2D_s0gln")
@@ -2002,8 +2002,6 @@ script = ExtResource("12_rn05e")
 zoom = Vector2(2.5, 2.5)
 
 [connection signal="animation_finished" from="AnimationTree" to="StateMachine/Attack" method="_on_animation_finished"]
-[connection signal="died" from="HealthComponent" to="HitboxComponent" method="_on_died"]
-[connection signal="damage_taken" from="HitboxComponent" to="HealthComponent" method="damage"]
-[connection signal="hp_received" from="HitboxComponent" to="HealthComponent" method="heal"]
+[connection signal="died" from="HealthComponent" to="HurtboxComponent" method="_on_died"]
 [connection signal="direction_changed" from="StateMachine/Move" to="." method="_on_direction_changed"]
 [connection signal="attack_finished" from="StateMachine/Attack" to="." method="_on_attack_finished"]

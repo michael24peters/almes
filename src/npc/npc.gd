@@ -16,6 +16,11 @@ var current_direction := Vector2.ZERO
 
 # Current action as determined by utility AI
 var current_action : Dictionary # NOTE: shouldn't need to set default value
+
+# Die variable(s)
+var dead := false
+
+# Attack variable(s)
 @onready var timer = $StateMachine/Attack/Timer
 
 func _ready():
@@ -28,25 +33,29 @@ func _ready():
 func _on_action_changed(action):
 	current_action = action
 	state_instructions()
-	print("action changed")
 
 func state_instructions():
-	if current_action["name"] == "idle": 
-		#print("Changing to idle state...") # Debug
-		state_machine.change_state("idle")
-	elif current_action["name"] == "wander": 
-		#print("Changing to wander state...") # Debug
-		state_machine.change_state("move")
-	elif current_action["name"] == "chase": 
-		#print("Changing to chase state...") # Debug
-		state_machine.change_state("move")
-	elif current_action["name"] == "attack":
-		if timer.is_stopped():
-			#print("Changing to attack state...") # Debug
-			state_machine.change_state("attack")
-		else: 
-			#print("Changing to idle state...")
+	if current_action["name"] == "die":
+		state_machine.change_state("die")
+		dead = true
+	
+	if !dead:
+		if current_action["name"] == "idle": 
+			#print("Changing to idle state...") # Debug
 			state_machine.change_state("idle")
+		elif current_action["name"] == "wander": 
+			#print("Changing to wander state...") # Debug
+			state_machine.change_state("move")
+		elif current_action["name"] == "chase": 
+			#print("Changing to chase state...") # Debug
+			state_machine.change_state("move")
+		elif current_action["name"] == "attack":
+			if timer.is_stopped():
+				#print("Changing to attack state...") # Debug
+				state_machine.change_state("attack")
+			else: 
+				#print("Changing to idle state...")
+				state_machine.change_state("idle")
 
 ## Signal handler for changing movement directions. 
 ##
@@ -64,4 +73,8 @@ func _on_attack_finished():
 	state_instructions()
 
 func _on_timer_timeout():
+	state_instructions()
+
+func _on_died():
+	dead = true
 	state_instructions()
