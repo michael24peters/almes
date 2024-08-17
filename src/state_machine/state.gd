@@ -2,9 +2,6 @@
 extends Node
 class_name State
 
-signal state_transition
-signal direction_changed(direction: Vector2, priority: int)
-
 func enter():
 	pass
 

@@ -24,6 +24,10 @@ Music="*res://src/music.tscn"
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/utility_curve_editor/plugin.cfg")
+
 [input]
 
 ui_left={
