@@ -35,7 +35,7 @@ func _physics_process(_delta: float):
 		if child is Action:
 			actions[child.name.to_lower()] = child.evaluate()
 	
-	#print("actions: ", actions) # Debug
+	print("actions: ", actions) # Debug
 	
 	var selected_action = selector()
 	#print("selected: %s, utility: %d" % [selected_action["name"], selected_action["utility"]]) # Debug
@@ -107,7 +107,7 @@ func get_weighted_probability(actions_: Dictionary) -> Dictionary:
 	var weighted_actions = actions_.duplicate()
 	var sum = weighted_actions.values().reduce(func(accum, utility): return accum + utility)
 	
-	var seed = randf() # Generate a pseudo-random float in range [0,1]
+	var rand = randf() # Generate a pseudo-random float in range [0,1]
 	var cumulative_weight = 0.0
 	
 	for action in weighted_actions: 
@@ -117,7 +117,7 @@ func get_weighted_probability(actions_: Dictionary) -> Dictionary:
 		# Add current weight to running total
 		cumulative_weight += weighted_actions[action]
 		# If action weight range contains seed, selected action found
-		if seed <= cumulative_weight: return {"name": action, "utility": actions_[action]}
+		if rand <= cumulative_weight: return {"name": action, "utility": actions_[action]}
 		# If seed is greater than cumulative weight, check the next action
 	
 	# Return error if no actions found

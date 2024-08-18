@@ -1,17 +1,14 @@
 extends Consideration
 
-func _ready():
-	self.parent_keys = ["npc"]
-	self.data_keys = ["healthcomponent"]
+var is_dead := false
 
-func get_derived_value() -> float:
-	if data.has("npc"):
-		# Load in NPC hp data
-		var hp = data["npc"]["healthcomponent"]["hp"]
-		var MAX_HP = data["npc"]["healthcomponent"]["max_hp"]
-		
-		# Calculate percent remaining hp
-		if MAX_HP > 0: 
-			if hp <= 0: return 1.0
-	
+## Returns weight of the consideration
+func evaluate() -> float:
+	if is_dead: return 99.9 # Other actions not possible while dead
 	return 0.0
+
+func _on_died():
+	is_dead = true
+
+func _on_alive():
+	is_dead = false

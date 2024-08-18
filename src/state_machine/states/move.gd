@@ -35,17 +35,13 @@ func update(_delta: float):
 		# Tell state machine that direction has changed
 		direction_changed.emit(last_direction)
 	
-	if direction == Vector2.ZERO: # Enter Idle state if movement stops
+	if direction == Vector2.ZERO: # Notify when movement stops
 		direction_changed.emit(Vector2.ZERO) # Not moving
 		return # Do not run the code any further
 	
 	# Set animation direction
 	animation_tree["parameters/Move/blend_position"] = direction 
 	
-	# Get steering momentum
-	#var momentum = parent.velocity - direction * move_speed
-	# Get new velocity based on steering momentum
-	#parent.velocity += momentum * delta
 	parent.velocity = direction * move_speed # Set character velocity
 	parent.move_and_slide() # Move character
 

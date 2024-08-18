@@ -1,17 +1,13 @@
 extends Consideration
 
-func _ready():
-	self.parent_keys = ["npc", "player"]
-	self.data_keys = ["healthcomponent", "healthcomponent"]
-
 ## Calculates and returns percent remaining hp of NPC
 # NOTE: excluding from considerations for now for simplest implementation
 func get_derived_value() -> float:
 	return 1.0
-	#if data.has("npc") and data.has("player"):
+	#if Database.data.has("npc") and Database.data.has("player"):
 		## Load in NPC and Player hp values
-		#var entity_hp = data["npc"]["healthcomponent"]["hp"]
-		#var target_hp = data["player"]["healthcomponent"]["hp"]
+		#var entity_hp = Database.data["npc"]["healthcomponent"]["hp"]
+		#var target_hp = Database.data["player"]["healthcomponent"]["hp"]
 		#
 		## Base derived value
 		#var derived_value = 1.0

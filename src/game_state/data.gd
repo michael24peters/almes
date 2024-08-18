@@ -5,7 +5,7 @@ class_name Data
 
 # Declare all data variables
 # Signal to notify when data changes
-signal data_changed(node_name, new_data)
+signal data_changed(owner_name, node_name, new_data)
 
 ## return relevant data
 func get_data() -> Dictionary: 
@@ -16,4 +16,4 @@ func get_data() -> Dictionary:
 # NOTE: an alternative is to make every variable private and require getters 
 # and setters, which automatically call data_changed signal
 func update_data(): 
-	data_changed.emit(self.get_parent().name.to_lower(), self.name.to_lower(), get_data())
+	data_changed.emit(owner.name.to_lower(), self.name.to_lower(), get_data())

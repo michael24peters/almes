@@ -16,6 +16,6 @@ func exit():
 	animation_tree["parameters/conditions/idle"] = false 
 	#print("Exited Idle state") # Debug
 
-# Update direction based from StateMachine instructions, i.e. other states
+## Update direction
 func _on_direction_changed(new_direction: Vector2): 
 	direction = new_direction
