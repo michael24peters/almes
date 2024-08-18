@@ -18,7 +18,6 @@ func traverse_tree(node):
 		
 		# Add CharacterBody2D node
 		game_state[node.name.to_lower()]["self"] = node
-		
 	
 	for child in node.get_children():
 	

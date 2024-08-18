@@ -50,7 +50,7 @@ func generate_ray_casts() -> void:
 		# Activate ray
 		ray.enabled = true
 
-func _physics_process(delta) -> void:
+func _physics_process(_delta: float) -> void:
 	# Search for Character in line of sight
 	for ray in get_children():
 		if ray is RayCast2D:
@@ -72,7 +72,7 @@ func _physics_process(delta) -> void:
 	# Update view area to follow NPC
 	_view_area.position = npc.global_position
 	# Check whether to update rays based on Player being in range
-	var bodies_in_area = _view_area.get_overlapping_bodies()
+	#var bodies_in_area = _view_area.get_overlapping_bodies()
 	# If Player not in range, do not update rays this frame
 	#if bodies_in_area.size() == 0: return
 	

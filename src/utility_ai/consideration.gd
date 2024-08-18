@@ -30,8 +30,8 @@ func get_derived_value() -> float:
 ## Request data from Database
 func request_data():
 	# parent_keys and data_keys must not be empty
-	if parent_keys.size() == 0 or data_keys.size() == 0:
-		push_error("No data request for consideration! (parent_keys.size = %s, data_keys.size = %s)" % [parent_keys.size(), data_keys.size()])
+	#if parent_keys.size() == 0 or data_keys.size() == 0:
+		#push_error("No data request for consideration! (parent_keys.size = %s, data_keys.size = %s)" % [parent_keys.size(), data_keys.size()])
 	# parent_keys and data_keys must be the same size
 	if parent_keys.size() != data_keys.size():
 		push_error("Data request keys size do not match! (parent_keys.size = %s, data_keys.size = %s)" % [parent_keys.size(), data_keys.size()])

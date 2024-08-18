@@ -8,6 +8,7 @@ func _ready():
 	connect("area_entered", Callable(self, "on_area_entered"))
 
 func _on_area_entered(hitbox: HitboxComponent) -> void:
+	print("area entered") # Debug
 	if hitbox == null: # Not a HitboxComponent
 		return
 

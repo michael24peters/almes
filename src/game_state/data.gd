@@ -13,7 +13,7 @@ func get_data() -> Dictionary:
 
 ## Notify Database of data change. Every time you change the data in an instance
 ## of Data, you must call this method to notify the Database.
-# NOTE: an alternative is to make every variable private and require a getters
+# NOTE: an alternative is to make every variable private and require getters 
 # and setters, which automatically call data_changed signal
 func update_data(): 
 	data_changed.emit(self.get_parent().name.to_lower(), self.name.to_lower(), get_data())

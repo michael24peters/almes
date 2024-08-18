@@ -20,7 +20,7 @@ func enter():
 	animation_tree["parameters/conditions/move"] = true 
 	#print("Entered Move state") # Debug
 
-func update(delta):
+func update(_delta: float):
 	# Get direction from input handler, which has a unique instance for each 
 		# character type
 	var new_direction = input_handler.get_direction()
